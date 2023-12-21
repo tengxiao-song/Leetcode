@@ -42,3 +42,18 @@
 
 * while (left < right)，这里使用 < ,因为left == right在区间[left, right)是没有意义的
 * if (nums[middle] > target) right 更新为 middle，因为当前nums[middle]不等于target，去左区间继续寻找，而寻找区间是左闭右开区间，所以right更新为middle.
+
+# 27. 移除元素
+
+[力扣题目链接](https://leetcode.cn/problems/remove-element/)
+
+## 思路
+
+虽然python可以pop元素，但是用pop的时间不是最优。
+
+**而且要知道数组的元素在内存地址中是连续的，不能单独删除数组中的某个元素，只能覆盖。**
+### 双指针法
+
+双指针法（快慢指针法）： **通过一个快指针和慢指针在一个for循环下完成两个for循环的工作。**
+* 快指针：寻找新数组的元素 ，新数组就是不含有目标元素的数组
+* 慢指针：指向更新 新数组下标的位置
