@@ -81,3 +81,14 @@
 
 此时的时间复杂度为O(n)，相对于暴力排序的解法O(n + nlog n)还是提升不少的。
 
+# 209.长度最小的子数组
+
+[力扣题目链接](https://leetcode.cn/problems/minimum-size-subarray-sum/)
+### 滑动窗口 O(n)
+
+# 59.螺旋矩阵II
+
+[力扣题目链接](https://leetcode.cn/problems/spiral-matrix-ii/)
+
+**本题并不涉及到什么算法，就是模拟过程，但却十分考察对代码的掌控能力。**
+
