@@ -86,6 +86,9 @@
 [力扣题目链接](https://leetcode.cn/problems/minimum-size-subarray-sum/)
 ### 滑动窗口 O(n)
 
+滑动窗口的精妙之处在于根据当前子序列和大小的情况，不断调节子序列的起始位置。从而将O(n^2)的暴力解法降为O(n)。
+
+
 # 59.螺旋矩阵II
 
 [力扣题目链接](https://leetcode.cn/problems/spiral-matrix-ii/)
