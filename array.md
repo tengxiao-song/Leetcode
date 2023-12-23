@@ -95,3 +95,14 @@
 
 **本题并不涉及到什么算法，就是模拟过程，但却十分考察对代码的掌控能力。**
 
+
+# 1365.有多少小于当前数字的数字
+
+[力扣题目链接](https://leetcode.cn/problems/how-many-numbers-are-smaller-than-the-current-number/)
+
+
+# 941.有效的山脉数组
+
+[力扣题目链接](https://leetcode.cn/problems/valid-mountain-array/)
+## 思路
+双指针
