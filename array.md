@@ -106,3 +106,26 @@
 [力扣题目链接](https://leetcode.cn/problems/valid-mountain-array/)
 ## 思路
 双指针
+
+# 1207.独一无二的出现次数
+
+[力扣题目链接](https://leetcode.cn/problems/unique-number-of-occurrences/)
+## 思路
+Hashtable
+
+# 283. 移动零：动态规划：一样的套路，再求一次完全平方数
+
+[力扣题目链接](https://leetcode.cn/problems/move-zeroes/)
+## 思路
+双指针
+
+# 189. 旋转数组
+
+[力扣题目链接](https://leetcode.cn/problems/rotate-array/)
+
+## 思路
+本题是右旋转，步骤如下：
+
+1. 反转整个字符串
+2. 反转区间为前k的子串
+3. 反转区间为k到末尾的子串
