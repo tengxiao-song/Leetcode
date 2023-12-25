@@ -129,3 +129,10 @@ Hashtable
 1. 反转整个字符串
 2. 反转区间为前k的子串
 3. 反转区间为k到末尾的子串
+
+# 724.寻找数组的中心下标
+
+[力扣题目链接](https://leetcode.cn/problems/find-pivot-index/)
+## 思路
+
+左半持续增加，右半持续减少并比对
