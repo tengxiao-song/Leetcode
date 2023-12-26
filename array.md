@@ -136,3 +136,15 @@ Hashtable
 ## 思路
 
 左半持续增加，右半持续减少并比对
+
+# 34. 在排序数组中查找元素的第一个和最后一个位置
+
+[力扣链接](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/)
+
+## 思路
+**扎扎实实的写两个二分分别找左边界和右边界**
+### 寻找右边界
+那么这里我采用while (left <= right)的写法，区间定义为[left, right]，即左闭右闭的区间。<br>
+用left-1确认右边界是否等于target，并且右边界的index为left-1，因为是由left负责推动边界的。
+### 寻找左边界
+这里不用确认是否等于target，因为右边界已经保证至少有一个值了。但是左边界的index等于right+1，因为是由right负责推动边界的。
