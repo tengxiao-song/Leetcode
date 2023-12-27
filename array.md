@@ -148,3 +148,21 @@ Hashtable
 用left-1确认右边界是否等于target，并且右边界的index为left-1，因为是由left负责推动边界的。
 ### 寻找左边界
 这里不用确认是否等于target，因为右边界已经保证至少有一个值了。但是左边界的index等于right+1，因为是由right负责推动边界的。
+
+# 922. 按奇偶排序数组II
+
+[力扣题目链接](https://leetcode.cn/problems/sort-array-by-parity-ii/)
+
+# 35.搜索插入位置
+
+[力扣题目链接](https://leetcode.cn/problems/search-insert-position/)
+## 思路
+
+先用二分法找target的index。<br>
+如果没找到就return最后的left。这里我reture left主要是考虑到insert是把比他大的东西往后推。
+并且由于
+```
+elif nums[mid] < target:
+  left = mid + 1
+```
+left确保了当前位置和之后的都比target大。
