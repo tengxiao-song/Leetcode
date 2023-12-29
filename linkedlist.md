@@ -29,3 +29,26 @@ struct ListNode {
 # 707.设计链表
 
 [力扣题目链接](https://leetcode.cn/problems/design-linked-list/)
+
+# 206.反转链表
+
+[力扣题目链接](https://leetcode.cn/problems/reverse-linked-list/)
+
+# 24. 两两交换链表中的节点
+
+[力扣题目链接](https://leetcode.cn/problems/swap-nodes-in-pairs/)
+## 思路
+
+这道题目正常模拟就可以了。
+
+建议使用虚拟头结点，这样会方便很多，要不然每次针对头结点（没有前一个指针指向头结点），还要单独处理。
+
+# 19.删除链表的倒数第N个节点
+
+[力扣题目链接](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
+进阶：你能尝试使用一趟扫描实现吗？
+## 思路
+
+
+双指针的经典应用，如果要删除倒数第n个节点，让fast移动n步，然后让fast和slow同时移动，直到fast指向链表末尾。删掉slow所指向的节点就可以了。
+推荐使用虚拟头结点，这样方便处理删除实际头结点的逻辑。
