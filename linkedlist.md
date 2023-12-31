@@ -119,3 +119,8 @@ fast指针走过的节点数：` x + y + n (y + z)`，n为fast指针在环内走
 
 [力扣题目链接](https://leetcode.cn/problems/palindrome-linked-list/)
 
+
+# 143.重排链表
+
+[力扣题目链接](https://leetcode.cn/problems/reorder-list/submissions/)
+
