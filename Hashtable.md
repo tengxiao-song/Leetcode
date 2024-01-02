@@ -130,4 +130,53 @@ class Solution:
 这里设置了default value to 0，so there is no need to check the keys 
 ```
 rec = defaultdict(lambda : 0)
+or
+rec = defaultdict(int)
+```
+# 383. 赎金信
+
+[力扣题目链接](https://leetcode.cn/problems/ransom-note/)
+
+这题除了counter以外，还可以用数组做，counter的map空间消耗比数组大。
+
+# 第15题. 三数之和(难点)
+
+[力扣题目链接](https://leetcode.cn/problems/3sum/)
+
+### 去重逻辑的思考(难点)
+```Python
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        result = []
+        nums.sort()
+        
+        for i in range(len(nums)):
+            
+            # 跳过相同的元素以避免重复
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+                
+            left = i + 1
+            right = len(nums) - 1
+            
+            while right > left:
+                sum_ = nums[i] + nums[left] + nums[right]
+                
+                if sum_ < 0:
+                    left += 1
+                elif sum_ > 0:
+                    right -= 1
+                else:
+                    result.append([nums[i], nums[left], nums[right]])
+                    
+                    # 跳过相同的元素以避免重复
+                    while right > left and nums[right] == nums[right - 1]:
+                        right -= 1
+                    while right > left and nums[left] == nums[left + 1]:
+                        left += 1
+                        
+                    right -= 1
+                    left += 1
+                    
+        return result
 ```
