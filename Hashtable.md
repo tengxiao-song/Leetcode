@@ -180,3 +180,12 @@ class Solution:
                     
         return result
 ```
+
+# 第18题. 四数之和
+
+[力扣题目链接](https://leetcode.cn/problems/4sum/)
+
+
+# 205. 同构字符串
+
+[力扣题目链接](https://leetcode.cn/problems/isomorphic-strings/)
