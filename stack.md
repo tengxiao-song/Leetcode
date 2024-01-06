@@ -10,7 +10,7 @@
 
 [力扣题目链接](https://leetcode.cn/problems/implement-queue-using-stacks/) 
  
-* 你只能使用标准的栈操作 -- 也就是只有 push to top, peek/pop from top, size, 和 is empty 操作是合法的。
+* 你只能使用标准的栈操作 -- 也就是只有 push to top, peek/pop from top, size, 和 is empty 操作是合法的。 (只能用pop，不能用pop(0),res[0])
   
 使用栈来模式队列的行为，如果仅仅用一个栈，是一定不行的，所以需要两个栈**一个输入栈，一个输出栈**，这里要注意输入栈和输出栈的关系。
  
@@ -19,6 +19,8 @@
 # 225. 用队列实现栈
 
 [力扣题目链接](https://leetcode.cn/problems/implement-stack-using-queues/)
+
+只能用popleft(), 不能用res[-1]
 
 优化，使用一个队列实现
 ```
