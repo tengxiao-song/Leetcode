@@ -56,6 +56,10 @@ class MyStack:
 
 [力扣题目链接](https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/)
 
+# 150. 逆波兰表达式求值
+
+[力扣题目链接](https://leetcode.cn/problems/evaluate-reverse-polish-notation/)
+
 坑：python 的整数除法是向下取整，而不是向零取整。
 
 python2 的除法 "/" 是整数除法， "-3 / 2 = -2" ；
