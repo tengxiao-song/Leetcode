@@ -47,3 +47,26 @@ class MyStack:
     def empty(self) -> bool:
         return not self.que
 ```
+
+# 20. 有效的括号
+
+[力扣题目链接](https://leetcode.cn/problems/valid-parentheses/)
+
+# 1047. 删除字符串中的所有相邻重复项
+
+[力扣题目链接](https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/)
+
+坑：python 的整数除法是向下取整，而不是向零取整。
+
+python2 的除法 "/" 是整数除法， "-3 / 2 = -2" ；
+
+python3 的地板除 "//" 是整数除法， "-3 // 2 = -2" ；
+
+python3 的除法 "/" 是浮点除法， "-3 / 2 = -1.5" ；
+
+对Python 的整数除法问题，可以用 int(num1 / float(num2)) 来做，即先用浮点数除法，然后取整。
+
+无论如何，浮点数除法都会得到一个浮点数，比如 "-3 / 2.0 = 1.5" ；
+
+此时再取整，就会得到整数部分，即 float(-1.5) = -1 。
+
