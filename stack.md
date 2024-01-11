@@ -84,4 +84,20 @@ python3 的除法 "/" 是浮点除法， "-3 / 2 = -1.5" ；
 
 针对滑动区间，因为保存的是下标，如果下标小于 i - k 也就是在窗口之外，从前往后pop元素直到满足要求。由于最靠前的元素一定是最大的，在满足区间内选中第一个元素即可。
 
+# 347.前 K 个高频元素
+
+[力扣题目链接](https://leetcode.cn/problems/top-k-frequent-elements/)
+
+```
+        import heapq
+        count = Counter(nums)
+        res = []
+        for key, value in count.items():
+            if len(res) >= k:
+                if value > res[0][0]:
+                    heapq.heapreplace(res,(value,key))
+            else:
+                heapq.heappush(res, (value,key))
+        return [item[1] for item in res]
+```
 
