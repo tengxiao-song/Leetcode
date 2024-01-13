@@ -94,3 +94,41 @@ struct TreeNode {
 * [117.填充每个节点的下一个右侧节点指针II](https://leetcode.cn/problems/populating-next-right-pointers-in-each-node-ii/)
 * [104.二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/)
 * [111.二叉树的最小深度](https://leetcode.cn/problems/minimum-depth-of-binary-tree/)
+
+# 226.翻转二叉树
+
+[力扣题目链接](https://leetcode.cn/problems/invert-binary-tree/)
+
+# 101. 对称二叉树
+
+[力扣题目链接](https://leetcode.cn/problems/symmetric-tree/)
+
+# 222.完全二叉树的节点个数(难题)
+
+[力扣题目链接](https://leetcode.cn/problems/count-complete-tree-nodes/)
+
+完全二叉树只有两种情况，情况一：就是满二叉树，情况二：最后一层叶子节点没有满。
+
+对于情况一，可以直接用 2^树深度 - 1 来计算，注意这里根节点深度为1。
+
+对于情况二，分别递归左孩子，和右孩子，递归到某一深度一定会有左孩子或者右孩子为满二叉树，然后依然可以按照情况1来计算。
+
+# 110.平衡二叉树(难题)
+
+[力扣题目链接](https://leetcode.cn/problems/balanced-binary-tree/)
+
+分别求出其左右子树的高度，然后如果差值小于等于1，则返回当前二叉树的高度，否则返回-1，表示已经不是二叉平衡树了。
+
+用后序遍历，这样如果有子树返回-1，当前节点也可以返回-1.
+```
+def isBalanced(self, root):
+        def dfs(root):
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            if left == -1 or right == -1 or abs(left-right) > 1:
+                return -1
+            return max(left,right)+1
+        return dfs(root) != -1
+```
