@@ -132,3 +132,26 @@ def isBalanced(self, root):
             return max(left,right)+1
         return dfs(root) != -1
 ```
+
+
+# 257. 二叉树的所有路径
+
+[力扣题目链接](https://leetcode.cn/problems/binary-tree-paths/)
+
+
+# 404.左叶子之和
+
+[力扣题目链接](https://leetcode.cn/problems/sum-of-left-leaves/)
+
+
+# 513.找树左下角的值
+
+[力扣题目链接](https://leetcode.cn/problems/find-bottom-left-tree-value/)
+
+# 112. 路径总和
+
+[力扣题目链接](https://leetcode.cn/problems/path-sum/)
+
+这里不用手动剪去root.val，因为int variable用的是pass by value，不会改变。
+
+257题如果用array做的话，当append元素的时候会改变所有的array，因为用的是pass by reference。
