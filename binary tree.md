@@ -155,3 +155,43 @@ def isBalanced(self, root):
 这里不用手动剪去root.val，因为int variable用的是pass by value，不会改变。
 
 257题如果用array做的话，当append元素的时候会改变所有的array，因为用的是pass by reference。
+
+# 106.从中序与后序遍历序列构造二叉树
+
+[力扣题目链接](https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
+
+# 654.最大二叉树
+
+[力扣题目地址](https://leetcode.cn/problems/maximum-binary-tree/)
+
+# 617.合并二叉树
+
+[力扣题目链接](https://leetcode.cn/problems/merge-two-binary-trees/)
+
+# 700.二叉搜索树中的搜索
+
+[力扣题目地址](https://leetcode.cn/problems/search-in-a-binary-search-tree/)
+
+# 98.验证二叉搜索树
+
+[力扣题目链接](https://leetcode.cn/problems/validate-binary-search-tree/)
+
+可以用数组，或者直接搜索。这里是模拟中序搜索，先更新左节点的值，然后是中最后是后。
+```
+class Solution:
+    def __init__(self):
+        self.pre = None  # 用来记录前一个节点
+
+    def isValidBST(self, root):
+        if root is None:
+            return True
+
+        left = self.isValidBST(root.left)
+
+        if self.pre is not None and self.pre.val >= root.val:
+            return False
+        self.pre = root  # 记录前一个节点
+
+        right = self.isValidBST(root.right)
+        return left and right
+```
