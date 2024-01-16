@@ -195,9 +195,13 @@ class Solution:
         right = self.isValidBST(root.right)
         return left and right
 ```
-# 530.二叉搜索树的最小绝对差 (constant space)
+# 530.二叉搜索树的最小绝对差
 
 [力扣题目链接](https://leetcode.cn/problems/minimum-absolute-difference-in-bst/)
+
+# 501.二叉搜索树中的众数 (constant space/no hashmap)
+
+[力扣题目链接](https://leetcode.cn/problems/find-mode-in-binary-search-tree/)
 ```
 class Solution(object):
     def findMode(self, root):
