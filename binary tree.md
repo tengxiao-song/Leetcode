@@ -195,3 +195,56 @@ class Solution:
         right = self.isValidBST(root.right)
         return left and right
 ```
+# 530.二叉搜索树的最小绝对差 (constant space)
+
+[力扣题目链接](https://leetcode.cn/problems/minimum-absolute-difference-in-bst/)
+```
+class Solution(object):
+    def findMode(self, root):
+        self.count = 0
+        self.maxcount = 0
+        self.res = []
+        self.pre = None
+        def dfs(root):
+            if not root:
+                return
+            dfs(root.left)
+            if self.pre == None:
+                self.count += 1     #case: first node
+            elif self.pre.val == root.val:
+                self.count += 1     #case:same node
+            else:
+                self.count = 1     #case:newnode
+            self.pre = root         #update node
+            if self.count == self.maxcount:
+                self.res.append(root.val)
+            elif self.count > self.maxcount:
+                self.maxcount = self.count
+                self.res = [root.val]       #update result,erase previous
+            dfs(root.right)
+            return
+        dfs(root)
+        return self.res
+```
+
+
+# 236. 二叉树的最近公共祖先 (又错)
+
+[力扣题目链接](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/)
+```
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
+        if not root or root == p or root == q:
+            return root
+        left = self.lowestCommonAncestor(root.left,p,q)
+        right = self.lowestCommonAncestor(root.right,p,q)
+        if not left:return right    #case:都在右
+        if not right: return left   #case:都在左
+        return root         #case:左右各有一个
+```
