@@ -252,3 +252,31 @@ class Solution(object):
         if not right: return left   #case:都在左
         return root         #case:左右各有一个
 ```
+# 235. 二叉搜索树的最近公共祖先
+
+[力扣题目链接](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/)
+
+# 701.二叉搜索树中的插入操作
+
+[力扣题目链接](https://leetcode.cn/problems/insert-into-a-binary-search-tree/)
+
+# 450.删除二叉搜索树中的节点(错)
+
+[力扣题目链接]( https://leetcode.cn/problems/delete-node-in-a-bst/)
+
+```
+class Solution:
+    def deleteNode(self, root, key):
+        if root is None:  # 如果根节点为空，直接返回
+            return root
+        if root.val == key:  # 找到要删除的节点
+            if root.right is None:  # 如果右子树为空，直接返回左子树作为新的根节点
+                return root.left
+            cur = root.right
+            while cur.left:  # 找到右子树中的最左节点
+                cur = cur.left
+            root.val, cur.val = cur.val, root.val  # 将要删除的节点值与最左节点值交换,这样做到删除节点时必定返回None
+        root.left = self.deleteNode(root.left, key)  # 在左子树中递归删除目标节点
+        root.right = self.deleteNode(root.right, key)  # 在右子树中递归删除目标节点
+        return root
+```
