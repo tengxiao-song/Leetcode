@@ -280,3 +280,59 @@ class Solution:
         root.right = self.deleteNode(root.right, key)  # 在右子树中递归删除目标节点
         return root
 ```
+
+
+# 669. 修剪二叉搜索树(错)
+
+[力扣题目链接](https://leetcode.cn/problems/trim-a-binary-search-tree/)
+
+对根结点进行深度优先遍历。对于当前访问的结点，如果结点为空结点，直接返回空结点；如果结点的值小于low，那么说明该结点及它的左子树都不符合要求，我们返回对它的右结点进行修剪后的结果；如果结点的值大于high，那么说明该结点及它的右子树都不符合要求，我们返回对它的左子树进行修剪后的结果；如果结点的值位于区间，我们将结点的左结点设为对它的左子树修剪后的结果，右结点设为对它的右子树进行修剪后的结果。
+```
+class Solution(object):
+    def trimBST(self, root, low, high):
+        """
+        :type root: TreeNode
+        :type low: int
+        :type high: int
+        :rtype: TreeNode
+        """
+        if not root: return root
+        if root.val < low:
+            return self.trimBST(root.right,low,high)
+        if root.val > high:
+            return self.trimBST(root.left,low,high)
+        root.left = self.trimBST(root.left, low, high)
+        root.right = self.trimBST(root.right,low,high)
+        return root
+```
+
+# 108.将有序数组转换为二叉搜索树
+
+[力扣题目链接](https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/)
+
+# 538.把二叉搜索树转换为累加树(优解)
+
+[力扣题目链接](https://leetcode.cn/problems/convert-bst-to-greater-tree/)
+
+```
+class Solution(object):
+    def convertBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        self.sum = 0
+        def dfs(root):
+            if not root:
+                return
+            dfs(root.right)
+            self.sum += root.val
+            root.val = self.sum
+            dfs(root.left)
+            return root
+        return dfs(root)
+```
+
+# 129. 求根节点到叶节点数字之和
+
+[力扣题目链接](https://leetcode.cn/problems/sum-root-to-leaf-numbers/)
