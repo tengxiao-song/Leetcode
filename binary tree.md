@@ -336,3 +336,17 @@ class Solution(object):
 # 129. 求根节点到叶节点数字之和
 
 [力扣题目链接](https://leetcode.cn/problems/sum-root-to-leaf-numbers/)
+
+# 1382.将二叉搜索树变平衡
+
+[力扣题目链接](https://leetcode.cn/problems/balance-a-binary-search-tree/)
+
+# 100. 相同的树
+
+[力扣题目链接](https://leetcode.cn/problems/same-tree/)
+
+
+# 116. 填充每个节点的下一个右侧节点指针
+
+[力扣题目链接](https://leetcode.cn/problems/populating-next-right-pointers-in-each-node/)
+
