@@ -43,3 +43,33 @@ class Solution(object):
         dfs(1,n,k,[])
         return self.res
 ```
+
+# 216.组合总和III
+
+[力扣题目链接](https://leetcode.cn/problems/combination-sum-iii/)
+
+# 17.电话号码的字母组合(又错)
+
+[力扣题目链接](https://leetcode.cn/problems/letter-combinations-of-a-phone-number/)
+
+```
+class Solution(object):
+    def letterCombinations(self, digits):
+        self.book = {'2':["a","b",'c'],'3':['d','e','f'],'4':['g','h','i'],'5':['j','k','l'],'6':['m','n','o'],'7':['p','q','r','s'],'8':['t','u','v'],'9':['w','x','y','z']}
+        self.res = []
+        if not digits:return []
+        def dfs(digits,index,path):
+            if index == len(digits):
+                self.res.append(path)
+                return
+            letters = self.book[digits[index]]
+            for letter in letters:
+                dfs(digits,index+1,path+letter)
+        dfs(digits,0,"")
+        return self.res
+```
+
+# 39. 组合总和
+
+[力扣题目链接](https://leetcode.cn/problems/combination-sum/)
+
