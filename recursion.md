@@ -22,7 +22,7 @@ void backtracking(参数) {
 # 第77题. 组合(剪枝)
 
 [力扣题目链接](https://leetcode.cn/problems/combinations/ )
-```
+```py
 class Solution(object):
     def combine(self, n, k):
         """
@@ -54,7 +54,7 @@ class Solution(object):
 
 index很关键
 
-```
+```py
 class Solution(object):
     def letterCombinations(self, digits):
         self.book = {'2':["a","b",'c'],'3':['d','e','f'],'4':['g','h','i'],'5':['j','k','l'],'6':['m','n','o'],'7':['p','q','r','s'],'8':['t','u','v'],'9':['w','x','y','z']}
@@ -81,7 +81,7 @@ class Solution(object):
 
 去重逻辑很关键
 
-```
+```py
 class Solution(object):
     def combinationSum2(self, candidates, target):
         """
@@ -109,7 +109,7 @@ class Solution(object):
 
 [力扣题目链接](https://leetcode.cn/problems/palindrome-partitioning/)
 
-```
+```py
 class Solution(object):
     def partition(self, s):
         """
