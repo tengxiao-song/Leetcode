@@ -52,6 +52,8 @@ class Solution(object):
 
 [力扣题目链接](https://leetcode.cn/problems/letter-combinations-of-a-phone-number/)
 
+index很关键
+
 ```
 class Solution(object):
     def letterCombinations(self, digits):
@@ -72,4 +74,61 @@ class Solution(object):
 # 39. 组合总和
 
 [力扣题目链接](https://leetcode.cn/problems/combination-sum/)
+
+# 40.组合总和II(又错)
+
+[力扣题目链接](https://leetcode.cn/problems/combination-sum-ii/)
+
+去重逻辑很关键
+
+```
+class Solution(object):
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        candidates.sort()
+        self.res = []
+        def dfs(candidates,target,index,path):
+            if sum(path) == target:
+                self.res.append(path[:])
+            elif sum(path) > target:
+                return
+            else:
+                for i in range(index,len(candidates)):
+                    //remove duplicates!!!
+                    if i > index and candidates[i] == candidates[i-1]:
+                        continue
+                    dfs(candidates,target,i+1,path+[candidates[i]])
+        dfs(candidates,target,0,[])
+        return self.res
+```
+# 131.分割回文串
+
+[力扣题目链接](https://leetcode.cn/problems/palindrome-partitioning/)
+
+```
+class Solution(object):
+    def partition(self, s):
+        """
+        :type s: str
+        :rtype: List[List[str]]
+        """
+        self.res = []
+        def dfs(s,path):
+            if not s:
+                self.res.append(path[:])
+            for i in range(1,len(s)+1):
+                if s[:i] == s[:i][::-1]:
+                    dfs(s[i:],path+[s[:i]])
+        dfs(s,[])
+        return self.res
+```
+
+# 93.复原IP地址
+
+[力扣题目链接](https://leetcode.cn/problems/restore-ip-addresses/)
+
 
