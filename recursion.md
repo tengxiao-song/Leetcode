@@ -131,4 +131,40 @@ class Solution(object):
 
 [力扣题目链接](https://leetcode.cn/problems/restore-ip-addresses/)
 
+# 78.子集
+
+[力扣题目链接](https://leetcode.cn/problems/subsets/)
+
+# 90.子集II
+
+[力扣题目链接](https://leetcode.cn/problems/subsets-ii/)
+
+# 491.递增子序列
+
+[力扣题目链接](https://leetcode.cn/problems/non-decreasing-subsequences/)
+
+```py
+class Solution(object):
+    def findSubsequences(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.res = []
+        def dfs(nums,path,index):
+            if not nums:
+                return
+            if len(path) >= 2:
+                if path[-1] >= path[-2]:
+                    self.res.append(path[:])
+                else:
+                    return        #if not in ascending order, return immedaitely and aborts the later recursion
+            for i in range(index,len(nums)):
+                if nums[i] in nums[index:i]:        #prevents duplicates, because we can't order the nums
+                    continue
+                dfs(nums,path+[nums[i]],i+1)
+        dfs(nums,[],0)
+        return self.res
+```
+
 
