@@ -167,4 +167,43 @@ class Solution(object):
         return self.res
 ```
 
+# 46.全排列
+
+[力扣题目链接](https://leetcode.cn/problems/permutations/)
+
+# 47.全排列 II
+
+[力扣题目链接](https://leetcode.cn/problems/permutations-ii/)
+
+# 332.重新安排行程(困难)
+
+[力扣题目链接](https://leetcode.cn/problems/reconstruct-itinerary/)
+
+```py
+class Solution:
+    def findItinerary(self, tickets):
+        targets = collections.defaultdict(list)
+        for ticket in tickets:
+            targets[ticket[0]].append(ticket[1])    #把出发地和可以去到的终点记录在map里
+        for val in targets.values():
+            val.sort()    # 对目的地列表进行排序, 保证lexical order
+        path = ['JFK']
+        ticketsLen = len(tickets) + 1
+        
+        def dfs(targets,path,ticketsLen):
+            if len(path) == ticketsLen:    
+                return True            #找到有效行程
+            airport = path[-1]    #更新出发点
+            destination = targets[airport]        #更新所有终点
+            for i, dest in enumerate(destination):    
+                targets[airport].pop(i)    # 标记已使用的机票，避免重复使用
+                path.append(dest)        # 添加目的地到路径
+                if dfs(targets,path,ticketsLen):
+                    return True        #找到有效行程，直接返回，因为sorted了
+                targets[airport].insert(i,dest)    #没找到就恢复机票
+                path.pop()        #移除目的地
+            return False        # 没有找到有效行程
+        dfs(targets,path,ticketsLen)
+        return path
+```
 
