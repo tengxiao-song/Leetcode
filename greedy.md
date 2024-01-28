@@ -21,3 +21,11 @@ class Solution:
                 preDiff = curDiff  # 注意这里，只在摆动变化的时候更新preDiff
         return result  # 返回最长摆动子序列的长度
 ```
+
+# 53. 最大子序和
+
+[力扣题目链接](https://leetcode.cn/problems/maximum-subarray/)
+
+# 122.买卖股票的最佳时机 II
+
+[力扣题目链接](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
