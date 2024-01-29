@@ -29,3 +29,23 @@ class Solution:
 # 122.买卖股票的最佳时机 II
 
 [力扣题目链接](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
+
+# 55. 跳跃游戏
+
+[力扣题目链接](https://leetcode.cn/problems/jump-game/)
+
+# 45.跳跃游戏 II(又错)
+
+[力扣题目链接](https://leetcode.cn/problems/jump-game-ii/)
+
+```py
+class Solution(object):
+    def jump(self, nums):
+        res, reach, maxreach = 0, 0, 0
+        for i in range(len(nums)-1):    //不用检查最后一位
+            maxreach = max(maxreach,i + nums[i])
+            if i == reach:
+                res += 1
+                reach = maxreach
+        return res
+```
