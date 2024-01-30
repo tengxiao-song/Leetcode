@@ -49,3 +49,20 @@ class Solution(object):
                 reach = maxreach
         return res
 ```
+
+# 1005.K次取反后最大化的数组和(错)
+
+[力扣题目链接](https://leetcode.cn/problems/maximize-sum-of-array-after-k-negations/)
+
+```py
+class Solution(object):
+    def largestSumAfterKNegations(self, nums, k):
+        nums.sort(key=lambda x: abs(x), reverse=True)    #按照绝对值大小降序排序
+        for i in range(len(nums)):
+            if nums[i] < 0 and k > 0:    #只在当前元素是负以及还有k翻转
+                nums[i] *= -1
+                k -= 1
+        if k % 2 == 1:        #当k为奇数，翻转影响最小的元素
+            nums[-1] *= -1
+        return sum(nums)
+```
