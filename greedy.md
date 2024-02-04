@@ -98,3 +98,25 @@ class Solution:
 # 860.柠檬水找零
 
 [力扣题目链接](https://leetcode.cn/problems/lemonade-change/)
+
+# 406.根据身高重建队列(又错)
+
+[力扣题目链接](https://leetcode.cn/problems/queue-reconstruction-by-height/)
+
+本题有两个维度，h和k，看到这种题目一定要想如何确定一个维度，然后再按照另一个维度重新排列。
+
+**如果两个维度一起考虑一定会顾此失彼**。
+
+按照身高排序之后，优先按身高高的people的k来插入，后序插入节点也不会影响前面已经插入的节点，最终按照k的规则完成了队列。
+
+```py
+class Solution(object):
+    def reconstructQueue(self, people):
+        #先sort by reverse height，如果一样再sort by k
+        people.sort(key = lambda x : (-x[0],x[1]))
+        res = []
+        for i in people:
+            res.insert(i[1],i)
+        return res
+```
+
