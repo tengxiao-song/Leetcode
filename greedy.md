@@ -142,3 +142,9 @@ class Solution:
 
 [力扣题目链接](https://leetcode.cn/problems/non-overlapping-intervals/)
 
+# 763.划分字母区间
+
+[力扣题目链接](https://leetcode.cn/problems/partition-labels/)
+
+先用hashmap记录每个元素的起始和最终位置，再用类似merge interval合并。
+
