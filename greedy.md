@@ -174,3 +174,32 @@ class Solution:
 
         return result
 ```
+
+# 738.单调递增的数字
+
+[力扣题目链接](https://leetcode.cn/problems/monotone-increasing-digits/)
+
+题目要求小于等于N的最大单调递增的整数，那么拿一个两位的数字来举例。
+
+例如：98，一旦出现strNum[i - 1] > strNum[i]的情况（非单调递增），首先想让strNum[i - 1]--，然后strNum[i]给为9，这样这个整数就是89，即小于98的最大的单调递增整数。
+
+此时是从前向后遍历还是从后向前遍历呢？
+
+从前向后遍历的话，遇到strNum[i - 1] > strNum[i]的情况，让strNum[i - 1]减一，但此时如果strNum[i - 1]减一了，可能又小于strNum[i - 2]。
+
+举个例子，数字：332，从前向后遍历的话，那么就把变成了329，此时2又小于了第一位的3了，真正的结果应该是299。
+
+那么从后向前遍历，就可以重复利用上次比较得出的结果了，从后向前遍历332的数值变化为：332 -> 329 -> 299
+
+
+```py
+class Solution(object):
+    def monotoneIncreasingDigits(self, n):
+        temp = list(str(n))
+        length = len(temp)
+        for i in range(length-1,0,-1):
+            if temp[i] < temp[i-1]:
+                temp[i:] = '9' * (len(temp) - i)
+                temp[i-1] = str(int(temp[i-1])-1)
+        return int("".join(temp))
+```
