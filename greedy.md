@@ -203,3 +203,38 @@ class Solution(object):
                 temp[i-1] = str(int(temp[i-1])-1)
         return int("".join(temp))
 ```
+
+
+# 968.监控二叉树（Hard）
+
+[力扣题目链接](https://leetcode.cn/problems/binary-tree-cameras/)
+
+**我们要从下往上看，局部最优：让叶子节点的父节点安摄像头，所用摄像头最少，整体最优：全部摄像头数量所用最少！**
+
+可以使用后序遍历也就是左右中的顺序，这样就可以在回溯的过程中从下到上进行推导了。
+
+* 0：该节点无覆盖
+* 1：本节点有摄像头
+* 2：本节点有覆盖
+
+```py
+class Solution(object):
+    def minCameraCover(self, root):
+        self.res = 0
+        def dfs(root):
+            if not root:
+                return 2
+            left = dfs(root.left)
+            right = dfs(root.right)
+            if left == 2 and right == 2:
+                return 0
+            if left == 0 or right == 0:
+                self.res += 1
+                return 1
+            if left == 1 or right == 1:
+                return 2
+        top = dfs(root)
+        if top == 0:
+            self.res += 1        #处理单独的头部摄像头情况
+        return self.res 
+```
