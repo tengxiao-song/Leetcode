@@ -238,3 +238,8 @@ class Solution(object):
             self.res += 1        #处理单独的头部摄像头情况
         return self.res 
 ```
+
+# 649. Dota2 参议院
+
+[力扣题目链接](https://leetcode.cn/problems/dota2-senate/)
+
