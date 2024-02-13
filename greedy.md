@@ -243,3 +243,7 @@ class Solution(object):
 
 [力扣题目链接](https://leetcode.cn/problems/dota2-senate/)
 
+# 1221. 分割平衡字符串 
+
+[力扣题目链接](https://leetcode.cn/problems/split-a-string-in-balanced-strings/)
+
