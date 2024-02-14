@@ -46,3 +46,9 @@ dp[1] = 1;
 按照这个递推公式dp[i] = dp[i - 1] + dp[i - 2]，我们来推导一下，当N为10的时候，dp数组应该是如下的数列：
 
 0 1 1 2 3 5 8 13 21 34 55
+
+# 70. 爬楼梯
+
+[力扣题目链接](https://leetcode.cn/problems/climbing-stairs/)
+
+dp[i] = dp[i - 1] + dp[i - 2]
