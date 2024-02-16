@@ -52,3 +52,8 @@ dp[1] = 1;
 [力扣题目链接](https://leetcode.cn/problems/climbing-stairs/)
 
 dp[i] = dp[i - 1] + dp[i - 2]
+
+# 746. 使用最小花费爬楼梯
+
+[力扣题目链接](https://leetcode.cn/problems/min-cost-climbing-stairs/)
+
