@@ -279,3 +279,21 @@ dp[0][j] 和 dp[i][0] 都已经初始化了，那么其他下标应该初始化�
 
 主要就是自己没有动手推导一下dp数组的演变过程，如果推导明白了，代码写出来就算有问题，只要把dp数组打印出来，对比一下和自己推导的有什么差异，很快就可以发现问题了。
 
+```python
+def test_2_wei_bag_problem1(weight, value, bagweight):
+    dp = [[0] * (bagweight + 1) for _ in range(len(weight))]
+
+    # 初始化
+    for j in range(weight[0], bagweight + 1):
+        dp[0][j] = value[0]
+
+    # weight数组的大小就是物品个数
+    for i in range(1, len(weight)):  # 遍历物品
+        for j in range(bagweight + 1):  # 遍历背包容量
+            if j < weight[i]:
+                dp[i][j] = dp[i - 1][j]
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i])
+
+    return dp[len(weight) - 1][bagweight]
+```
