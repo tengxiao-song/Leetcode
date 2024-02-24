@@ -339,3 +339,21 @@ class Solution(object):
                     return True
         return False
 ```
+
+# 1049.最后一块石头的重量II
+
+[力扣题目链接](https://leetcode.cn/problems/last-stone-weight-ii/)
+
+本题其实就是尽量让石头分成重量相同的两堆，相撞之后剩下的石头最小，**这样就化解成01背包问题了**。
+
+```py
+class Solution(object):
+    def lastStoneWeightII(self, stones):
+        total = sum(stones)
+        target = total / 2        #尽量去凑一半的重量，这样对撞就是0
+        dp = [0] * (target + 1)    #index 0代表容量0
+        for i in stones:
+            for j in range(target, i-1, -1):    #终止条件为i-1，因为之后容量放不下物品i
+                dp[j] = max(dp[j], dp[j-i] + i)
+        return total - dp[target] - dp[target]    #用另一半石头减去这一半石头
+```
