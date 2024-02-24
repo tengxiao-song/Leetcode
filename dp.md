@@ -297,3 +297,45 @@ def test_2_wei_bag_problem1(weight, value, bagweight):
 
     return dp[len(weight) - 1][bagweight]
 ```
+
+# 一维滚动数组背包
+
+必须是先遍历物品在外，容量在里。而且要用后续遍历保证只添加每个物品一次。
+
+```python
+def test_1_wei_bag_problem():
+    weight = [1, 3, 4]
+    value = [15, 20, 30]
+    bagWeight = 4
+    # 初始化
+    dp = [0] * (bagWeight + 1)
+    for i in range(len(weight)):  # 遍历物品
+        for j in range(bagWeight, weight[i] - 1, -1):  # 遍历背包容量， 后续遍历保证只添加每个物品一次
+            dp[j] = max(dp[j], dp[j - weight[i]] + value[i])
+    print(dp[bagWeight])
+```
+
+# 416. 分割等和子集
+
+[力扣题目链接](https://leetcode.cn/problems/partition-equal-subset-sum/)
+
+这道题目是要找是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
+
+那么只要找到集合里能够出现 sum / 2 的子集总和，就算是可以分割成两个相同元素和子集了。相当于填满容量为sum / 2的背包。
+
+本题中每一个元素的数值既是重量，也是价值。
+
+```py
+class Solution(object):
+    def canPartition(self, nums):
+        if sum(nums) % 2 == 1:
+            return False
+        mid = sum(nums) / 2
+        dp = [0] * (mid+1)
+        for i in nums:
+            for j in range(mid, i-1,-1):
+                dp[j] = max(dp[j], dp[j-i] + i)
+                if dp[j] == mid:
+                    return True
+        return False
+```
