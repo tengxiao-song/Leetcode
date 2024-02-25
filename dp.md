@@ -325,6 +325,8 @@ def test_1_wei_bag_problem():
 
 本题中每一个元素的数值既是重量，也是价值。
 
+**此时问题就转化为，能否装满容量为x的背包**。
+
 ```py
 class Solution(object):
     def canPartition(self, nums):
@@ -346,6 +348,8 @@ class Solution(object):
 
 本题其实就是尽量让石头分成重量相同的两堆，相撞之后剩下的石头最小，**这样就化解成01背包问题了**。
 
+**此时问题就转化为，尽量装满容量为x的背包**。
+
 ```py
 class Solution(object):
     def lastStoneWeightII(self, stones):
@@ -356,4 +360,40 @@ class Solution(object):
             for j in range(target, i-1, -1):    #终止条件为i-1，因为之后容量放不下物品i
                 dp[j] = max(dp[j], dp[j-i] + i)
         return total - dp[target] - dp[target]    #用另一半石头减去这一半石头
+```
+
+# 494.目标和
+
+[力扣题目链接](https://leetcode.cn/problems/target-sum/)
+
+本题要如何使表达式结果为target，
+
+既然为target，那么就一定有 left组合 - right组合 = target。
+
+left + right = sum，而sum是固定的。right = sum - left  
+
+公式来了， left - (sum - left) = target 推导出  left = (target + sum)/2 。
+
+target是固定的，sum是固定的，left就可以求出来。
+
+此时问题就是在集合nums中找出和为left的组合。
+
+**此时问题就转化为，装满容量为x的背包，有几种方法**。
+
+```python
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        total_sum = sum(nums)  # 计算nums的总和
+        if abs(target) > total_sum:
+            return 0  # 此时没有方案
+        if (target + total_sum) % 2 == 1:
+            return 0  # 此时没有方案
+        target_sum = (target + total_sum) // 2  # 目标和
+        dp = [0] * (target_sum + 1)  # 创建动态规划数组，初始化为0
+        dp[0] = 1  # 当目标和为0时，只有一种方案，即什么都不选
+        for num in nums:
+            for j in range(target_sum, num - 1, -1):
+                dp[j] += dp[j - num]  # 状态转移方程，累加不同选择方式的数量
+        return dp[target_sum]  # 返回达到目标和的方案数
+
 ```
