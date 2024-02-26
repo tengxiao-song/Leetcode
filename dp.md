@@ -397,3 +397,38 @@ class Solution:
         return dp[target_sum]  # 返回达到目标和的方案数
 
 ```
+
+# 474.一和零
+
+[力扣题目链接](https://leetcode.cn/problems/ones-and-zeroes/)
+
+这个背包有两个维度，一个是m 一个是n，而不同长度的字符串就是不同大小的待装物品。
+
+**此时问题就转化为，装满容量为x,y的背包的最大个数**。
+
+1. 确定dp数组（dp table）以及下标的含义
+
+**dp[i][j]：最多有i个0和j个1的strs的最大子集的大小为dp[i][j]**。
+
+2. 确定递推公式
+
+dp[i][j] 可以由前一个strs里的字符串推导出来，strs里的字符串有zeroNum个0，oneNum个1。
+
+dp[i][j] 就可以是 dp[i - zeroNum][j - oneNum] + 1。
+
+然后我们在遍历的过程中，取dp[i][j]的最大值。
+
+所以递推公式：dp[i][j] = max(dp[i][j], dp[i - zeroNum][j - oneNum] + 1);
+
+```python
+class Solution:
+    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
+        dp = [[0] * (n + 1) for _ in range(m + 1)]  # 创建二维动态规划数组，初始化为0
+        for s in strs:  # 遍历物品
+            zeroNum = s.count('0')  # 统计0的个数
+            oneNum = len(s) - zeroNum  # 统计1的个数
+            for i in range(m, zeroNum - 1, -1):  # 遍历背包容量且从后向前遍历
+                for j in range(n, oneNum - 1, -1):
+                    dp[i][j] = max(dp[i][j], dp[i - zeroNum][j - oneNum] + 1)  # 状态转移方程
+        return dp[m][n]
+```
