@@ -469,3 +469,28 @@ for(int i = 0; i < weight.size(); i++) { // 遍历物品
 ```
 
 **同样，在完全背包中，对于一维dp数组来说，其实两个for循环嵌套顺序是无所谓的！**
+
+# 518.零钱兑换II
+
+[力扣题目链接](https://leetcode.cn/problems/coin-change-ii/)
+
+给定不同面额的硬币和一个总金额。写出函数来计算可以凑成总金额的硬币组合数。假设每一种面额的硬币有无限个。 
+
+求装满重量为amount的背包有多少种方法，每个物品可以添加无限次。
+
+```py
+class Solution(object):
+    def change(self, amount, coins):
+        dp = [0] * (amount + 1)
+        dp[0] = 1
+        for i in coins:
+            for j in range(i, amount+1):
+                dp[j] += dp[j-i]
+        return dp[amount]
+```
+
+在求装满背包有几种方案的时候，认清遍历顺序是非常关键的。
+
+**如果求组合数就是外层for循环遍历物品，内层for遍历背包**。
+
+**如果求排列数就是外层for遍历背包，内层for循环遍历物品**。
