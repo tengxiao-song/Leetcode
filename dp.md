@@ -494,3 +494,28 @@ class Solution(object):
 **如果求组合数就是外层for循环遍历物品，内层for遍历背包**。
 
 **如果求排列数就是外层for遍历背包，内层for循环遍历物品**。
+
+# 377. 组合总和 Ⅳ
+
+[力扣题目链接](https://leetcode.cn/problems/combination-sum-iv/)
+
+给定一个由正整数组成且不存在重复数字的数组，找出和为给定目标正整数的组合的个数。 这里顺序不同的序列被视作不同的组合。
+
+个数可以不限使用，说明这是一个完全背包。
+
+得到的集合是排列，说明需要考虑元素之间的顺序。
+
+**如果求排列数就是外层for遍历背包，内层for循环遍历物品**。
+
+```python
+class Solution:
+    def combinationSum4(self, nums: List[int], target: int) -> int:
+        dp = [0] * (target + 1)
+        dp[0] = 1
+        for i in range(1, target + 1):  # 遍历背包
+            for j in range(len(nums)):  # 遍历物品
+                if i - nums[j] >= 0:
+                    dp[i] += dp[i - nums[j]]
+        return dp[target]
+
+```
