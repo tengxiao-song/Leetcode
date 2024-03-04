@@ -545,3 +545,25 @@ class Solution(object):
                 dp[j] = min(dp[j],dp[j-i]+1)
         return dp[amount] if dp[amount] != float("inf") else -1
 ```
+
+# 279.完全平方数
+
+[力扣题目链接](https://leetcode.cn/problems/perfect-squares/)
+
+**我来把题目翻译一下：完全平方数就是物品（可以无限件使用），凑个正整数n就是背包，问凑满这个背包最少有多少物品？**
+
+dp[j] 可以由dp[j - i * i]推出， dp[j - i * i] + 1 便可以凑成dp[j]。
+
+此时我们要选择最小的dp[j]，所以递推公式：dp[j] = min(dp[j - i * i] + 1, dp[j]);
+
+```py
+class Solution(object):
+    def numSquares(self, n):
+        dp = [float("inf")] * (n+1)
+        dp[0] = 0
+        dp[1] = 1
+        for i in range(1,n/2+1):    # 遍历物品
+            for j in range(i*i,n+1):    # 遍历背包,直接从i*i开始
+                dp[j] = min(dp[j],dp[j-i*i]+1)
+        return dp[n]
+```
