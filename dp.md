@@ -567,3 +567,31 @@ class Solution(object):
                 dp[j] = min(dp[j],dp[j-i*i]+1)
         return dp[n]
 ```
+
+# 139.单词拆分
+
+[力扣题目链接](https://leetcode.cn/problems/word-break/)
+
+单词就是物品，字符串s就是背包，单词能否组成字符串s，就是问物品能不能把背包装满。
+
+递推公式：**dp[i] : 字符串长度为i的话，dp[i]为true，表示可以拆分为一个或多个在字典中出现的单词**。如果确定dp[j] 是true，且 [j, i] 这个区间的子串出现在字典里，那么dp[i]一定是true。（j < i ）。
+
+所以递推公式是 if([j, i] 这个区间的子串出现在字典里 && dp[j]是true) 那么 dp[i] = true。
+
+"apple", "pen" 是物品，那么我们要求 物品的组合一定是 "apple" + "pen" + "apple" 才能组成 "applepenapple"。  所以说，本题一定是 先遍历 背包，再遍历物品。 
+
+```python
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        wordSet = set(wordDict)
+        n = len(s)
+        dp = [False] * (n + 1)  # dp[i] 表示字符串的前 i 个字符是否可以被拆分成单词
+        dp[0] = True  # 初始状态，空字符串可以被拆分成单词
+
+        for i in range(1, n + 1): # 遍历背包
+            for j in range(i): # 遍历单词,取j到i的substr
+                if dp[j] and s[j:i] in wordSet:
+                    dp[i] = True  # 如果 s[0:j] 可以被拆分成单词，并且 s[j:i] 在单词集合中存在，则 s[0:i] 可以被拆分成单词
+                    break
+        return dp[n]
+```
