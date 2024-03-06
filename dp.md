@@ -595,3 +595,18 @@ class Solution:
                     break
         return dp[n]
 ```
+
+# 198.打家劫舍
+
+[力扣题目链接](https://leetcode.cn/problems/house-robber/)
+
+```
+class Solution(object):
+    def rob(self, nums):
+        length = len(nums)
+        dp = [0] * (length + 1)
+        dp[1] = nums[0]
+        for i in range(2,length+1):
+            dp[i] = max(dp[i-2]+nums[i-1],dp[i-1])    # 对于每个房屋，选择抢劫当前房屋和抢劫前一个房屋的最大金额
+        return dp[length]
+```
