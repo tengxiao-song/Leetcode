@@ -610,3 +610,33 @@ class Solution(object):
             dp[i] = max(dp[i-2]+nums[i-1],dp[i-1])    # 对于每个房屋，选择抢劫当前房屋和抢劫前一个房屋的最大金额
         return dp[length]
 ```
+
+# 213.打家劫舍II
+
+[力扣题目链接](https://leetcode.cn/problems/house-robber-ii/)
+
+* 情况一：考虑包含首元素，不包含尾元素
+
+![213.打家劫舍II1](https://code-thinking-1253855093.file.myqcloud.com/pics/20210129160821374-20230310134003961.jpg)
+
+* 情况二：考虑包含尾元素，不包含首元素
+
+![213.打家劫舍II2](https://code-thinking-1253855093.file.myqcloud.com/pics/20210129160842491-20230310134008133.jpg)
+
+```py
+class Solution(object):
+    def rob(self, nums):
+        length = len(nums)
+        if length < 3:
+            return max(nums)
+        dp = [0] * (length)
+        dp1 = [0] * (length)
+        num1 = nums[1:]
+        dp[1] = nums[0]
+        dp1[1] = num1[0]
+        for i in range(2,length):
+            dp[i] = max(dp[i-1], dp[i-2]+nums[i-1])
+        for i in range(2,length):
+            dp1[i] = max(dp1[i-1], dp1[i-2]+num1[i-1])
+        return max(dp[length-1],dp1[length-1])
+```
