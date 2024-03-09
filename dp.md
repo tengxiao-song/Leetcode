@@ -640,3 +640,34 @@ class Solution(object):
             dp1[i] = max(dp1[i-1], dp1[i-2]+num1[i-1])
         return max(dp[length-1],dp1[length-1])
 ```
+
+# 337.打家劫舍 III
+
+[力扣题目链接](https://leetcode.cn/problems/house-robber-iii/)
+
+dp数组（dp table）以及下标的含义：下标为0记录不偷该节点所得到的的最大金钱，下标为1记录偷该节点所得到的的最大金钱。
+
+在遍历的过程中，如果遇到空节点的话，很明显，无论偷还是不偷都是0，所以就返回[0, 0]
+
+使用后序遍历。 因为要通过递归函数的返回值来做下一步计算。
+
+如果是偷当前节点，那么左右孩子就不能偷，val1 = cur->val + left[0] + right[0];  （**如果对下标含义不理解就再回顾一下dp数组的含义**）
+
+如果不偷当前节点，那么左右孩子就可以偷，至于到底偷不偷一定是选一个最大的，所以：val2 = max(left[0], left[1]) + max(right[0], right[1]);
+
+最后当前节点的状态就是{val2, val1}; 即：{不偷当前节点得到的最大金钱，偷当前节点得到的最大金钱}
+
+```py
+class Solution(object):
+    def rob(self, root):
+        def dfs(root):
+            if not root:
+                return [0,0]
+            dpleft = dfs(root.left)
+            dpright = dfs(root.right)
+            robval = root.val + dpleft[0] + dpright[0]
+            norobval = max(dpleft[0],dpleft[1]) + max(dpright[0],dpright[1])
+            return [norobval, robval]
+        dp = dfs(root)
+        return max(dp)
+```
