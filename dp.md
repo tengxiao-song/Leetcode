@@ -707,3 +707,23 @@ class Solution(object):
             dp[i][1] = max(dp[i-1][1], dp[i-1][0] + prices[i])
         return max(dp[length-1][0],dp[length-1][1])
 ```
+
+# 122.买卖股票的最佳时机II 
+
+[力扣题目链接](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
+
+本题因为一只股票可以买卖多次，所以当第i天买入股票的时候，所持有的现金可能有之前买卖过的利润。
+
+那么第i天持有股票即dp[i][0]，如果是第i天买入股票，所得现金就是昨天不持有股票的所得现金 减去 今天的股票价格 即：dp[i - 1][1] - prices[i]。
+
+```py
+class Solution(object):
+    def maxProfit(self, prices):
+        length = len(prices)
+        dp = [[0]*2 for _ in range(length)]
+        dp[0][0] = -prices[0]
+        for i in range(1, length):
+            dp[i][0] = max(dp[i-1][0], dp[i-1][1]-prices[i])
+            dp[i][1] = max(dp[i-1][1], dp[i-1][0] + prices[i])
+        return max(dp[length-1][0], dp[length-1][1])
+```
