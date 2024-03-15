@@ -755,3 +755,27 @@ class Solution(object):
             dp[i][3] = max(dp[i-1][3], dp[i-1][2] + prices[i])
         return dp[length-1][3]    #第二次卖出手里所剩的钱一定是最多的, 如果第一次卖出已经是最大值了，那么我们可以在当天立刻买入再立刻卖出。所以dp[4][4]已经包含了dp[4][2]的情况
 ```
+
+# 188.买卖股票的最佳时机IV
+
+[力扣题目链接](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/)
+
+这里要求至多有k次交易. 每次交易都会多出两个状态,例如k=2, 有第一次持有，不持有和第二次持有，不持有。所以每天dp数组有2k个状态。
+
+```py
+class Solution(object):
+    def maxProfit(self, k, prices):
+        length = len(prices)
+        dp = [[0]*(2*k) for _ in range(length)]
+        for i in range(0,2*k,2):
+            dp[0][i] = -prices[0]    #初始化所有第i次持有
+        for i in range(1,length):
+            for j in range(2*k):
+                if j == 0:
+                    dp[i][j] = max(dp[i-1][j], -prices[i])    #第一次持有必定是从零开始买进或者延续昨天
+                elif j % 2 == 1:
+                    dp[i][j] = max(dp[i-1][j], dp[i-1][j-1] + prices[i])    #奇数必定是第j次不持有，所以延续或者卖掉赚钱
+                else:
+                    dp[i][j] = max(dp[i-1][j], dp[i-1][j-1] - prices[i])    #偶数必定是第j次持有，所以延续或者买进
+        return dp[length-1][2*k-1]
+```
