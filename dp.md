@@ -779,3 +779,44 @@ class Solution(object):
                     dp[i][j] = max(dp[i-1][j], dp[i-1][j-1] - prices[i])    #偶数必定是第j次持有，所以延续或者买进
         return dp[length-1][2*k-1]
 ```
+
+# 309.最佳买卖股票时机含冷冻期
+
+[力扣题目链接](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
+
+* 卖出股票后，你无法在第二天买入股票 (即冷冻期为 1 天)。
+
+具体可以区分出如下四个状态：
+
+* 状态一：持有股票状态（之前就买入了股票然后没有操作，一直持有, 或者是今天买入股票，）
+    * 操作一：前一天就是持有股票状态（状态一），dp[i][0] = dp[i - 1][0]
+    * 操作二：今天买入了，有两种情况
+        * 前一天是冷冻期（状态四），dp[i - 1][3] - prices[i]
+        * 前一天是保持卖出股票的状态（状态二），dp[i - 1][1] - prices[i]
+* 不持有股票状态，这里就有两种卖出股票状态
+    * 状态二：保持卖出股票的状态（前一天就是卖出股票状态，一直没操作, 或者是两天前卖出了股票度过一天冷冻期）
+      * 操作一：前一天就是状态二, dp[i - 1][1]
+      * 操作二：前一天是冷冻期（状态四), dp[i - 1][3]
+    * 状态三：今天卖出股票
+        * 只有一个操作：昨天一定是持有股票状态（状态一），今天卖出
+* 状态四：今天为冷冻期状态，但冷冻期状态不可持续，只有一天！
+    * 只有一个操作：昨天卖出了股票（状态三）
+
+ ```CPP
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        if (n == 0) return 0;
+        vector<vector<int>> dp(n, vector<int>(4, 0));
+        dp[0][0] -= prices[0]; // 持股票
+        for (int i = 1; i < n; i++) {
+            dp[i][0] = max(dp[i - 1][0], max(dp[i - 1][3] - prices[i], dp[i - 1][1] - prices[i]));
+            dp[i][1] = max(dp[i - 1][1], dp[i - 1][3]);
+            dp[i][2] = dp[i - 1][0] + prices[i];
+            dp[i][3] = dp[i - 1][2];
+        }
+        return max(dp[n - 1][3], max(dp[n - 1][1], dp[n - 1][2]));
+    }
+};
+```
