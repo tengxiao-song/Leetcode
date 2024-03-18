@@ -825,3 +825,24 @@ public:
 [力扣题目链接](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
 
 你可以无限次地完成交易，但是你每笔交易都需要付手续费。再卖出时减去手续费即可。
+
+
+# 300.最长递增子序列
+
+[力扣题目链接](https://leetcode.cn/problems/longest-increasing-subsequence/)
+
+给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。子序列是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。
+
+**dp[i]表示i之前包括i的以nums[i]结尾的最长递增子序列的长度** 
+
+```py
+class Solution(object):
+    def lengthOfLIS(self, nums):
+        length = len(nums)
+        dp = [1]*length    #所有元素自己都有一长度
+        for i in range(1,length):
+            for j in range(i):
+                if nums[j] < nums[i]:
+                    dp[i] = max(dp[i],dp[j]+1)
+        return max(dp)        #最大子序列不一定以最后一个元素结尾，需要返回整个dp最大的一个
+```
