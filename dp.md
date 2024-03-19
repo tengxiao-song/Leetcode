@@ -841,8 +841,16 @@ class Solution(object):
         length = len(nums)
         dp = [1]*length    #所有元素自己都有一长度
         for i in range(1,length):
-            for j in range(i):
+            for j in range(i):        #不要求连续，所以可以从任意子序列加当前元素
                 if nums[j] < nums[i]:
                     dp[i] = max(dp[i],dp[j]+1)
         return max(dp)        #最大子序列不一定以最后一个元素结尾，需要返回整个dp最大的一个
 ```
+
+# 674. 最长连续递增序列
+
+[力扣题目链接](https://leetcode.cn/problems/longest-continuous-increasing-subsequence/)
+
+给定一个未经排序的整数数组，找到最长且 连续递增的子序列，并返回该序列的长度。
+
+因为本题要求连续递增子序列，所以就只要比较nums[i]与nums[i - 1].
