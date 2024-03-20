@@ -854,3 +854,37 @@ class Solution(object):
 给定一个未经排序的整数数组，找到最长且 连续递增的子序列，并返回该序列的长度。
 
 因为本题要求连续递增子序列，所以就只要比较nums[i]与nums[i - 1].
+
+# 718. 最长重复子数组
+
+[力扣题目链接](https://leetcode.cn/problems/maximum-length-of-repeated-subarray/)
+
+给两个整数数组 A 和 B ，返回两个数组中公共的、长度最长的子数组的长度。注意题目中说的子数组，其实就是连续子序列。
+
+dp[i][j] ：以下标i - 1为结尾的A，和以下标j - 1为结尾的B，最长重复子数组长度为dp[i][j]。dp第一行和第一列都设置成0，类似于dummynode。  
+
+根据dp[i][j]的定义，dp[i][j]的状态只能由dp[i - 1][j - 1]推导出来。两个数组都得往前移一位。
+
+![718.最长重复子数组](https://code-thinking-1253855093.file.myqcloud.com/pics/2021011215282060.jpg)
+
+```python
+class Solution:
+    def findLength(self, nums1: List[int], nums2: List[int]) -> int:
+        # 创建一个二维数组 dp，用于存储最长公共子数组的长度
+        dp = [[0] * (len(nums2) + 1) for _ in range(len(nums1) + 1)]
+        # 记录最长公共子数组的长度
+        result = 0
+
+        # 遍历数组 nums1
+        for i in range(1, len(nums1) + 1):
+            # 遍历数组 nums2
+            for j in range(1, len(nums2) + 1):
+                # 如果 nums1[i-1] 和 nums2[j-1] 相等
+                if nums1[i - 1] == nums2[j - 1]:
+                    # 在当前位置上的最长公共子数组长度为前一个位置上的长度加一
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                # 更新最长公共子数组的长度
+                if dp[i][j] > result:
+                    result = dp[i][j]
+        return result
+```
