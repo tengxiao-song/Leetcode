@@ -888,3 +888,31 @@ class Solution:
                     result = dp[i][j]
         return result
 ```
+
+# 1143.最长公共子序列
+
+[力扣题目链接](https://leetcode.cn/problems/longest-common-subsequence/)
+
+给定两个字符串 text1 和 text2，返回这两个字符串的最长公共子序列的长度。子序列是可以删减的。
+
+递推公式：如果text1[i-1] == text2[j-1]，在两个子序列前一位的基础上加一。如果不相同，选择dp[i - 1][j], dp[i][j - 1]最大值。
+比如abcd和ace比较第三位，第三位不相等，则选择abc和ac，ab和ace的较大值。
+
+```python
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        # 创建一个二维数组 dp，用于存储最长公共子序列的长度
+        dp = [[0] * (len(text2) + 1) for _ in range(len(text1) + 1)]
+        
+        # 遍历 text1 和 text2，填充 dp 数组
+        for i in range(1, len(text1) + 1):
+            for j in range(1, len(text2) + 1):
+                if text1[i - 1] == text2[j - 1]:
+                    # 如果 text1[i-1] 和 text2[j-1] 相等，则当前位置的最长公共子序列长度为左上角位置的值加一
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                else:
+                    # 如果 text1[i-1] 和 text2[j-1] 不相等，则当前位置的最长公共子序列长度为上方或左方的较大值
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+                return dp[len(text1)][len(text2)]
+```
+
