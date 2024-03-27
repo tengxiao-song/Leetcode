@@ -1061,3 +1061,33 @@ public:
     }
 };
 ```
+
+# 72. 编辑距离
+
+[力扣题目链接](https://leetcode.cn/problems/edit-distance/)
+
+给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数 。
+
+你可以对一个单词进行如下三种操作：插入一个字符, 删除一个字符, 替换一个字符.
+
+**dp[i][j] 表示以下标i-1为结尾的字符串word1，和以下标j-1为结尾的字符串word2，最近编辑距离为dp[i][j]**。
+
+```py
+class Solution(object):
+    def minDistance(self, word1, word2):
+        length1 = len(word1)
+        length2 = len(word2)
+        dp = [[0]*(length2+1) for _ in range(length1+1)]
+        for i in range(length1+1):    #word1要删i次，删成word2
+            dp[i][0] = i
+        for j in range(length2+1):    #word2要删j次，删成word1
+            dp[0][j] = j
+        for i in range(1,length1+1):
+            for j in range(1,length2+1):
+                if word1[i-1] == word2[j-1]:
+                    dp[i][j] = dp[i-1][j-1]    #一样的话，就用前一位不用任何操作
+                else:
+                    #不一样的话，要么删一个word1，要么删一个word2，要么改一个。插入的逆操作就是删除，所以已经考虑到了。
+                    dp[i][j] = min(dp[i-1][j]+1, dp[i][j-1]+1, dp[i-1][j-1]+1)    
+        return dp[length1][length2]
+```
