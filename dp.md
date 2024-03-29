@@ -1122,3 +1122,36 @@ class Solution:
                         dp[i][j] = True
         return result
 ```
+
+# 516.最长回文子序列
+
+[力扣题目链接](https://leetcode.cn/problems/longest-palindromic-subsequence/)
+
+给定一个字符串 s ，找到其中最长的回文子序列，并返回该序列的长度。可删减。
+
+dp定义：**dp[i][j]：字符串s在[i, j]范围内最长的回文子序列的长度为dp[i][j]**。
+
+递推公式： 如果s[i]与s[j]相同，那么dp[i][j] = dp[i + 1][j - 1] + 2;
+
+如图：
+![516.最长回文子序列](https://code-thinking-1253855093.file.myqcloud.com/pics/20210127151350563.jpg)
+
+如果s[i]与s[j]不相同，说明s[i]和s[j]的同时加入 并不能增加[i,j]区间回文子序列的长度，那么分别加入s[i]、s[j]看看哪一个可以组成最长的回文子序列。
+
+初始化：需要手动初始化一下，当i与j相同，那么dp[i][j]一定是等于1的，即：一个字符的回文子序列长度就是1。
+
+```py
+class Solution(object):
+    def longestPalindromeSubseq(self, s):
+        length = len(s)
+        dp = [[0]*length for _ in range(length)]
+        for i in range(length):    #初始化，一个字符的回文子序列长度就是1
+            dp[i][i] = 1
+        for i in range(length-1,-1,-1):    #遍历顺序：从下往上，从左往右
+            for j in range(i+1, length):    #这里直接从i+1开始，因为i==j已经在初始化做了
+                if s[i] == s[j]:
+                    dp[i][j] = 2 + dp[i+1][j-1]    #如果一样就两个都加
+                else:
+                    dp[i][j] = max(dp[i+1][j], dp[i][j-1])    #不一样选一个大的加
+        return dp[0][length-1]
+```
