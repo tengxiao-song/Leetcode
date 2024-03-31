@@ -37,3 +37,11 @@ class Solution:
         dfs(0)
         return ans
 ```
+
+# 695. 岛屿的最大面积 
+
+[力扣题目链接](https://leetcode.cn/problems/max-area-of-island/)
+
+# 1020. 飞地的数量 
+
+[力扣链接](https://leetcode.cn/problems/number-of-enclaves/description/)
