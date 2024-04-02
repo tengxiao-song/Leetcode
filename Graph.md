@@ -93,7 +93,11 @@ class Solution(object):
 
 第一步：一次遍历地图，得出各个岛屿的面积，并做编号记录。可以使用map记录，key为岛屿编号，value为岛屿面积.
 
+![](https://code-thinking-1253855093.file.myqcloud.com/pics/20220829105644.png)
+
 第二步：再遍历地图，遍历0的方格（因为要将0变成1），并统计该1（由0变成的1）周边岛屿面积，将其相邻面积相加在一起，遍历所有 0 之后，就可以得出 选一个0变成1 之后的最大面积。
+
+![](https://code-thinking-1253855093.file.myqcloud.com/pics/20220829105249.png)
 
 ```py
 class Solution(object):
