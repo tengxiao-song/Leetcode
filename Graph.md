@@ -87,3 +87,63 @@ class Solution(object):
         return list(map(list, search(pacific) & search(atlantic))) # set intersection, 然后把每个tuple map成list
 ```
 
+# 827.最大人工岛 
+
+[力扣链接](https://leetcode.cn/problems/making-a-large-island/)
+
+第一步：一次遍历地图，得出各个岛屿的面积，并做编号记录。可以使用map记录，key为岛屿编号，value为岛屿面积.
+
+第二步：再遍历地图，遍历0的方格（因为要将0变成1），并统计该1（由0变成的1）周边岛屿面积，将其相邻面积相加在一起，遍历所有 0 之后，就可以得出 选一个0变成1 之后的最大面积。
+
+```py
+class Solution(object):
+    def largestIsland(self, grid):
+        visited = set() #标记访问过的位置
+        n = len(grid)
+        res = 0
+        self.island_size = 0 #用于保存当前岛屿的尺寸
+        directions = [[0,1], [0, -1], [1,0],[-1,0]] #四个方向
+        islands_size = defaultdict(int) #保存每个岛屿的尺寸
+
+        def dfs(island_num, r, c):
+            visited.add((r,c))
+            grid[r][c] = island_num  #访问过的位置标记为岛屿编号
+            self.island_size += 1
+            for i in range(4):
+                nexrR = r + directions[i][0]
+                nextC = c + directions[i][1]
+                if (nexrR not in range(n) or nextC not in range(n) or (nexrR, nextC) in visited):
+                    continue    #越界或以访问坐标continue
+                if grid[nexrR][nextC] == 1:  #遇到有效坐标，进入下一个层搜索
+                    dfs(island_num, nexrR, nextC)
+        island_num = 2    #初始岛屿编号设为2， 因为grid里的数据有0和1， 所以从2开始编号
+        all_land = True
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j] == 0:
+                    all_land = False    #地图里不全是陆地
+                if (i, j) not in visited and grid[i][j] == 1:
+                    self.island_size = 0    #遍历每个位置前重置岛屿尺寸为0
+                    dfs(island_num, i , j)
+                    islands_size[island_num] = self.island_size    #保存当前岛屿尺寸
+                    island_num += 1    #下一个岛屿编号加一
+        if all_land: return n*n    #如果全是陆地， 返回地图面积
+        count = 0
+        visited_island = set()    #保存访问过的岛屿编号
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j] == 0:
+                    count = 1     #把由0转换为1的位置计算到面积里
+                    visited_island.clear()
+                    for x in range(4):
+                        nearR = i + directions[x][0]
+                        nearC = j + directions[x][1]
+                        if nearR not in range(n) or nearC not in range(n): #周围位置越界
+                            continue
+                        if grid[nearR][nearC] in visited_island:  #岛屿已访问
+                            continue
+                        count += islands_size[grid[nearR][nearC]]    #累加连在一起的岛屿面积
+                        visited_island.add(grid[nearR][nearC])    #标记当前岛屿已访问
+                    res = max(res, count)
+        return res
+```
