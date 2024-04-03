@@ -151,3 +151,40 @@ class Solution(object):
                     res = max(res, count)
         return res
 ```
+
+# 127. 单词接龙
+
+[力扣题目链接](https://leetcode.cn/problems/word-ladder/)
+
+* 给你两个单词 beginWord 和 endWord 和一个字典 wordList ，找到从 beginWord 到 endWord 的 最短转换序列 中的 单词数目 。如果不存在这样的转换序列，返回 0。
+
+以示例1为例，从这个图中可以看出 hit 到 cog的路线，不止一条，有三条，一条是最短的长度为5，两条长度为6。
+
+![](https://code-thinking-1253855093.file.myqcloud.com/pics/20210827175432.png)
+
+首先题目中并没有给出点与点之间的连线，而是要我们自己去连，条件是字符只能差一个，所以判断点与点之间的关系，要自己判断是不是差一个字符，如果差一个字符，那就是有链接。
+
+然后就是求起点和终点的最短路径长度，**这里无向图求最短路，广搜最为合适，广搜只要搜到了终点，那么一定是最短的路径**。因为广搜就是以起点中心向四周扩散的搜索。
+
+```py
+class Solution(object):
+    def ladderLength(self, beginWord, endWord, wordList):
+        word_set = set(wordList)    #set结构，查找更快一些
+        if endWord not in word_set: return 0    #endWord没有，不存在path直接返回0
+        mapping = {beginWord:1}    #记录word是否访问过
+        queue = deque([beginWord])
+        while queue:
+            word = queue.popleft()
+            path = mapping[word]    #这个word的路径长度
+            for i in range(len(word)):
+                word_list = list(word)    #把word分成char准备替换
+                for j in range(26):
+                    word_list[i] = chr(ord('a')+j)    #每个char从a到z进行替换
+                    new_word = "".join(word_list)
+                    if new_word == endWord:    #如果新词是endword，返回当前长度+1
+                        return path + 1
+                    if new_word in word_set and new_word not in mapping:    #如果新词在set里且没访问过，记录新词路径长度，入queue（等同于访问一个vertex）
+                        mapping[new_word] = path + 1
+                        queue.append(new_word)
+        return 0
+```
