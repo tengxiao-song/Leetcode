@@ -71,3 +71,37 @@ class Solution:
             stack.append(i%len(nums))
         return dp
 ```
+
+# 42. 接雨水
+
+[力扣题目链接](https://leetcode.cn/problems/trapping-rain-water/)
+
+
+首先单调栈是按照行方向来计算雨水.
+
+![42.接雨水2](https://code-thinking-1253855093.file.myqcloud.com/pics/20210223092629946.png)
+
+从栈头（元素从栈头弹出）到栈底的顺序应该是从小到大的顺序。
+
+因为一旦发现添加的柱子高度大于栈头元素了，此时就出现凹槽了，栈头元素就是凹槽底部的柱子，栈头第二个元素就是凹槽左边的柱子，而添加的元素就是凹槽右边的柱子。
+
+栈里就存放下标
+
+```py
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        stack = [0]
+        result = 0
+        for i in range(1, len(height)):
+            while stack and height[i] > height[stack[-1]]:
+                mid_height = stack.pop()
+                if stack:
+                    # 雨水高度是 min(凹槽左侧高度, 凹槽右侧高度) - 凹槽底部高度
+                    h = min(height[stack[-1]], height[i]) - height[mid_height]
+                    # 雨水宽度是 凹槽右侧的下标 - 凹槽左侧的下标 - 1
+                    w = i - stack[-1] - 1
+                    # 累计总雨水体积
+                    result += h * w
+            stack.append(i)
+        return result
+```
