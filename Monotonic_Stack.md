@@ -51,3 +51,23 @@ class Solution(object):
                 res[i] = hash_map[nums1[i]]
         return res
 ```
+
+# 503.下一个更大元素II
+
+[力扣题目链接](https://leetcode.cn/problems/next-greater-element-ii/)
+
+给定一个循环数组（最后一个元素的下一个元素是数组的第一个元素），输出每个元素的下一个更大元素。数字 x 的下一个更大的元素是按数组遍历顺序，这个数字之后的第一个比它更大的数，这意味着你应该循环地搜索它的下一个更大的数。如果不存在，则输出 -1。
+
+方法1:两个原数组拼接在一起。方法2:用mod，省空间。
+```python
+class Solution:
+    def nextGreaterElements(self, nums: List[int]) -> List[int]:
+        dp = [-1] * len(nums)
+        stack = []
+        for i in range(len(nums)*2):
+            while(len(stack) != 0 and nums[i%len(nums)] > nums[stack[-1]]):
+                    dp[stack[-1]] = nums[i%len(nums)]
+                    stack.pop()
+            stack.append(i%len(nums))
+        return dp
+```
