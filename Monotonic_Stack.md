@@ -105,3 +105,33 @@ class Solution:
             stack.append(i)
         return result
 ```
+
+# 84.柱状图中最大的矩形 
+
+[力扣题目链接](https://leetcode.cn/problems/largest-rectangle-in-histogram/)
+
+给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
+
+和接雨水类似， 其实就是栈顶和栈顶的下一个元素以及要入栈的三个元素组成了我们要求最大面积的高度和宽度。
+
+那么因为本题是要找每个柱子左右两边第一个小于该柱子的柱子，所以从栈头（元素从栈头弹出）到栈底的顺序应该是从大到小的顺序！
+
+并且要在输入数组首尾各补上一个0（与42.接雨水不同的是，本题原首尾的两个柱子可以作为核心柱进行最大面积尝试）
+
+```py
+class Solution(object):
+    def largestRectangleArea(self, heights):
+        heights.insert(0,0)
+        heights.append(0)
+        stack = []
+        res = 0
+        for i in range(len(heights)):
+            while stack and heights[i] < heights[stack[-1]]:
+                index = stack.pop()
+                if stack:
+                    h = heights[index]
+                    w = i - stack[-1] - 1
+                    res = max(res, h * w)
+            stack.append(i)
+        return res
+```
