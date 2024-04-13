@@ -34,6 +34,22 @@
 
 * while (left <= right) 要使用 <= ，因为left == right是有意义的，所以使用 <=
 * if (nums[middle] > target) right 要赋值为 middle - 1，因为当前这个nums[middle]一定不是target，那么接下来要查找的左区间结束下标位置就是 middle - 1
+
+```py
+class Solution(object):
+    def search(self, nums, target):
+        left = 0
+        right = len(nums)-1
+        while left <= right:
+            mid = (left+right)/2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                right = mid - 1
+            else:
+                left = mid + 1
+        return -1
+```
 ### 二分法第二种写法
 
 如果说定义 target 是在一个在左闭右开的区间里，也就是[left, right) ，那么二分法的边界处理方式则截然不同。
@@ -55,8 +71,23 @@
 ### 双指针法
 
 双指针法（快慢指针法）： **通过一个快指针和慢指针在一个for循环下完成两个for循环的工作。**
-* 快指针：寻找新数组的元素 ，新数组就是不含有目标元素的数组
+* 快指针：指向末尾，删除下标的位置
 * 慢指针：指向更新 新数组下标的位置
+
+```py
+class Solution(object):
+    def removeElement(self, nums, val):
+        left = 0
+        right = len(nums)-1
+        while left <= right:
+            if nums[left] == val:
+                nums[left], nums[right] = nums[right], nums[left]
+                right -= 1
+            else:
+                left += 1
+        return left      
+        
+```
 
 # 977.有序数组的平方
 
