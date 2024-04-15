@@ -119,6 +119,23 @@ class Solution(object):
 
 滑动窗口的精妙之处在于根据当前子序列和大小的情况，不断调节子序列的起始位置。从而将O(n^2)的暴力解法降为O(n)。
 
+```py
+class Solution:
+    def minSubArrayLen(self, s: int, nums: List[int]) -> int:
+        l = len(nums)
+        left = 0, right = 0
+        min_len = float('inf')
+        cur_sum = 0 #当前的累加值
+        
+        while right < l:
+            cur_sum += nums[right]
+            while cur_sum >= s: # 当前累加值大于目标值
+                min_len = min(min_len, right - left + 1)
+                cur_sum -= nums[left]
+                left += 1
+            right += 1
+        return min_len if min_len != float('inf') else 0
+```
 
 # 59.螺旋矩阵II
 
