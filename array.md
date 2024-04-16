@@ -143,7 +143,10 @@ class Solution:
 
 **本题并不涉及到什么算法，就是模拟过程，但却十分考察对代码的掌控能力。**
 
-
+```py
+  #循环条件可以是
+  while top <= bottom and left <= right:
+```
 # 1365.有多少小于当前数字的数字
 
 [力扣题目链接](https://leetcode.cn/problems/how-many-numbers-are-smaller-than-the-current-number/)
