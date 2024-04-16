@@ -98,3 +98,6 @@ class MyHashMap(object):
                 return
 ```
 
+# 623. Add One Row to Tree
+
+[力扣题目链接](https://leetcode.cn/problems/add-one-row-to-tree/description/)
