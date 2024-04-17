@@ -101,3 +101,27 @@ class MyHashMap(object):
 # 623. Add One Row to Tree
 
 [力扣题目链接](https://leetcode.cn/problems/add-one-row-to-tree/description/)
+
+# 988. Smallest String Starting From Leaf
+
+[力扣题目链接]([https://leetcode.cn/problems/add-one-row-to-tree/description/](https://leetcode.cn/problems/smallest-string-starting-from-leaf/description/))
+
+用dfs暴力递归所有root到leaf的string，保留最小的。
+
+```py
+class Solution(object):
+    def smallestFromLeaf(self, root):
+        self.res = "~"    # ~是最大的字符，会被替代
+        def dfs(root, A):
+            if not root:
+                return
+            A.append(chr(root.val+97))
+            if not root.left and not root.right:
+                self.res = min(self.res, "".join(reversed(A)))
+            dfs(root.left, A)
+            dfs(root.right, A)
+            A.pop()
+        dfs(root, [])
+        return self.res
+```
+
