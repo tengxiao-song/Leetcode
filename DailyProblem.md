@@ -125,3 +125,34 @@ class Solution(object):
         return self.res
 ```
 
+# 1883. Minimum Skips to Arrive at Meeting On Time(困难，精度还有问题)
+
+dp定义: dp[i][j] 表示经过了 dist[0]到dist[i−1]的i段道路，并且跳过了j次的最短用时。
+
+如果跳过dp[i][j] = ceil(dp[i - 1][j] + dist[i - 1] / speed),
+如果不跳过dp[i][j] = dp[i - 1][j - 1] + dist[i - 1] / speed)
+
+初始化dp[0][0] = 0
+
+```py
+class Solution:
+    def minSkips(self, dist: List[int], speed: int, hoursBefore: int) -> int:
+        # 可忽略误差
+        EPS = 1e-7
+        n = len(dist)
+        f = [[float("inf")] * (n + 1) for _ in range(n + 1)]
+        f[0][0] = 0.
+        for i in range(1, n + 1):
+            for j in range(i + 1):
+                if j != i:
+                    f[i][j] = min(f[i][j], ceil(f[i - 1][j] + dist[i - 1] / speed - EPS))
+                if j != 0:
+                    f[i][j] = min(f[i][j], f[i - 1][j - 1] + dist[i - 1] / speed)
+        
+        for j in range(n + 1):
+            if f[n][j] < hoursBefore + EPS:
+                return j    #最后返回可以准时抵达的最小跳过次数
+        return -1
+```
+
+
