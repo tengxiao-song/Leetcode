@@ -155,4 +155,23 @@ class Solution:
         return -1
 ```
 
+# 216. Combination Sum III
 
+经典回溯模版
+
+```py
+class Solution(object):
+    def combinationSum3(self, k, n):
+        self.res = []
+        def dfs(temp, n, k, num):
+            if sum(temp) == n and len(temp) == k:
+                self.res.append(temp[:])
+                return
+            elif sum(temp) < n and len(temp) < k:
+                for i in range(num, 10):
+                    temp.append(i)
+                    dfs(temp, n, k,i+1)
+                    temp.pop()    #剪枝
+        dfs([],n, k, 1)
+        return self.res
+```
