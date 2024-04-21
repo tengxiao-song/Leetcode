@@ -39,9 +39,29 @@ struct ListNode {
 [力扣题目链接](https://leetcode.cn/problems/swap-nodes-in-pairs/)
 ## 思路
 
-这道题目正常模拟就可以了。
-
 建议使用虚拟头结点，这样会方便很多，要不然每次针对头结点（没有前一个指针指向头结点），还要单独处理。
+
+```py
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def swapPairs(self, head):
+        dummy = ListNode(-1)
+        dummy.next = head
+        slow = dummy
+        fast = dummy.next
+        #fast指向的是第一个需要交换的node，fast.next是第二个需要交换的node，如果是null就不需要交换了
+        while fast and fast.next:
+            slow.next = fast.next
+            fast.next = fast.next.next
+            slow.next.next = fast
+            slow = fast
+            fast = fast.next
+        return dummy.next
+```
 
 # 19.删除链表的倒数第N个节点
 
