@@ -104,7 +104,7 @@ class MyHashMap(object):
 
 # 988. Smallest String Starting From Leaf
 
-[力扣题目链接]([https://leetcode.cn/problems/add-one-row-to-tree/description/](https://leetcode.cn/problems/smallest-string-starting-from-leaf/description/))
+[力扣题目链接](https://leetcode.cn/problems/smallest-string-starting-from-leaf/)
 
 用dfs暴力递归所有root到leaf的string，保留最小的。
 
@@ -126,6 +126,8 @@ class Solution(object):
 ```
 
 # 1883. Minimum Skips to Arrive at Meeting On Time(困难，精度还有问题)
+
+[力扣题目链接](https://leetcode.cn/problems/minimum-skips-to-arrive-at-meeting-on-time/)
 
 dp定义: dp[i][j] 表示经过了 dist[0]到dist[i−1]的i段道路，并且跳过了j次的最短用时。
 
@@ -157,6 +159,8 @@ class Solution:
 
 # 216. Combination Sum III
 
+[力扣题目链接](https://leetcode.cn/problems/combination-sum-iii/)
+
 经典回溯模版
 
 ```py
@@ -175,3 +179,9 @@ class Solution(object):
         dfs([],n, k, 1)
         return self.res
 ```
+
+# 1052. Grumpy Bookstore Owner
+
+[力扣题目链接](https://leetcode.cn/problems/grumpy-bookstore-owner/description)
+
+数组滑动窗口
