@@ -74,11 +74,10 @@ class Solution(object):
 推荐使用虚拟头结点，这样方便处理删除实际头结点的逻辑。
 
 
-# 面试题 02.07. 链表相交 
+# 160.链表相交
 
-同：160.链表相交
+[力扣题目链接](https://leetcode.cn/problems/intersection-of-two-linked-lists/description/)
 
-[力扣题目链接](https://leetcode.cn/problems/intersection-of-two-linked-lists-lcci/)
 # 142.环形链表II
 
 [力扣题目链接](https://leetcode.cn/problems/linked-list-cycle-ii/)
