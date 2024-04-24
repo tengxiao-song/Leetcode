@@ -180,8 +180,45 @@ class Solution(object):
         return self.res
 ```
 
-# 1052. Grumpy Bookstore Owner
+# 216. Combination Sum III
 
-[力扣题目链接](https://leetcode.cn/problems/grumpy-bookstore-owner/description)
+[力扣题目链接](https://leetcode.cn/problems/combination-sum-iii/)
 
-数组滑动窗口
+
+# 2385. Amount of Time for Binary Tree to Be Infected
+
+[力扣题目链接](https://leetcode.cn/problems/amount-of-time-for-binary-tree-to-be-infected/description/)
+
+用dfs和hashtable建graph，用bfs扩散
+
+```py
+class Solution(object):
+    def amountOfTime(self, root, start):
+        dic = collections.defaultdict(list)
+        def dfs(root):
+            if not root:
+                return
+            if root.left:
+                dic[root.val].append(root.left.val)
+                dic[root.left.val].append(root.val)
+            if root.right:
+                dic[root.val].append(root.right.val)
+                dic[root.right.val].append(root.val)
+            dfs(root.left)
+            dfs(root.right)
+        dfs(root)
+
+        minute = defaultdict(int)
+        minute[start] = 0
+        res = 0
+        q = collections.deque([start])
+        while q:
+            u = q.popleft()
+            for v in dic[u]:
+                if v not in minute:
+                    q.append(v)
+                    minute[v] = minute[u] + 1
+                    res = max(res, minute[v])
+        return res
+
+```
