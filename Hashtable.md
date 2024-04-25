@@ -59,19 +59,31 @@ std::unordered_map 底层实现为哈希表，std::map 和std::multimap 的底�
 [力扣题目链接](https://leetcode.cn/problems/valid-anagram/)
 
 ## 思路
+用数组做hashtable
+```py
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        record = [0] * 26
+        for i in s:
+            record[ord(i) - ord("a")] += 1
+        for i in t:
+            record[ord(i) - ord("a")] -= 1
+        for i in range(26):
+            if record[i] != 0:
+                return False
+        return True
+```
+Python写法二：
 用Counter或者defaultdict, defaultdict不会有key error <br>
-Python写法二（没有使用数组作为哈希表，只是介绍defaultdict这样一种解题思路）：
 
 ```python
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         from collections import defaultdict
-        
         s_dict = defaultdict(int)
         t_dict = defaultdict(int)
         for x in s:
             s_dict[x] += 1
-        
         for x in t:
             t_dict[x] += 1
         return s_dict == t_dict
