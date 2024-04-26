@@ -222,3 +222,7 @@ class Solution(object):
         return res
 
 ```
+
+# 2639. Find the Width of Columns of a Grid
+
+[力扣题目链接](https://leetcode.cn/problems/find-the-width-of-columns-of-a-grid/description)
