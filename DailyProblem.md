@@ -227,7 +227,7 @@ class Solution(object):
 
 [力扣题目链接](https://leetcode.cn/problems/find-the-width-of-columns-of-a-grid/description)
 
-1017. Convert to Base -2
+# 1017. Convert to Base -2
 
 [力扣题目链接](https://leetcode.cn/problems/convert-to-base-2/description)
 
