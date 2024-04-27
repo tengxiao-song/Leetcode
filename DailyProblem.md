@@ -236,7 +236,9 @@ class Solution(object):
 2. 将余数加入答案
 3. n减去余数，除以进制
 
-其实2进制也需要n减去余数，但是可以忽略(?)
+其实2进制也需要n减去余数，但是可以忽略, 因为n一定是正的而且py除法自动向下取整了。
+
+但是-2进制，n有可能是负的，所以一定要减去余数。
 ```py
 class Solution(object):
     def baseNeg2(self, n):
