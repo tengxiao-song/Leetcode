@@ -226,3 +226,30 @@ class Solution(object):
 # 2639. Find the Width of Columns of a Grid
 
 [力扣题目链接](https://leetcode.cn/problems/find-the-width-of-columns-of-a-grid/description)
+
+1017. Convert to Base -2
+
+[力扣题目链接](https://leetcode.cn/problems/convert-to-base-2/description)
+
+类似于2进制的运算逻辑:
+1. 获取余数
+2. 将余数加入答案
+3. n减去余数，除以进制
+
+其实2进制也需要n减去余数，但是可以忽略(?)
+```py
+class Solution(object):
+    def baseNeg2(self, n):
+        if n == 0: return "0"
+        res = []
+        while n != 0:
+            remain = abs(n % -2)
+            if remain == 0:
+                res.append("0")
+            else:
+                res.append("1")
+            n = (n - remain) / (-2)
+        return "".join(res[::-1])    #余数从后往前就是转化后的数，这里用list的append所以要翻转
+
+```
+
