@@ -180,11 +180,6 @@ class Solution(object):
         return self.res
 ```
 
-# 216. Combination Sum III
-
-[力扣题目链接](https://leetcode.cn/problems/combination-sum-iii/)
-
-
 # 2385. Amount of Time for Binary Tree to Be Infected
 
 [力扣题目链接](https://leetcode.cn/problems/amount-of-time-for-binary-tree-to-be-infected/description/)
@@ -255,3 +250,28 @@ class Solution(object):
 
 ```
 
+# 1329. Sort the Matrix Diagonally
+
+[力扣题目链接](https://leetcode.cn/problems/sort-the-matrix-diagonally/description)
+
+1. 首先要分析知道对于对角线上的元素, 横纵坐标的差值是一样的;
+2. 然后我们遍历一遍数组, 把相同对角线上的元素值存放到同一个key的字典中;
+3. 然后对字典中每个key对应的value进行排序;
+4. 重新遍历一遍数组, 对于每个位置去找到字典中的排序后的value中最小的数值填进去,然后把该最小值弹出;
+
+```py
+class Solution(object):
+    def diagonalSort(self, mat):
+        row = len(mat)
+        col = len(mat[0])
+        diagonal = defaultdict(list)
+        for i in range(row):
+            for j in range(col):
+                diagonal[i-j].append(mat[i][j])
+        for key, val in diagonal.items():
+            diagonal[key] = sorted(val, reverse=True)
+        for i in range(row):
+            for j in range(col):
+                mat[i][j] = diagonal[i-j].pop()
+        return mat
+```
