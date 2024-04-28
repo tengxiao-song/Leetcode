@@ -180,6 +180,11 @@ class Solution(object):
         return self.res
 ```
 
+# 1052. Grumpy Bookstore Owner
+
+[力扣题目链接](https://leetcode.cn/problems/grumpy-bookstore-owner/description/)
+
+
 # 2385. Amount of Time for Binary Tree to Be Infected
 
 [力扣题目链接](https://leetcode.cn/problems/amount-of-time-for-binary-tree-to-be-infected/description/)
@@ -217,10 +222,6 @@ class Solution(object):
         return res
 
 ```
-
-# 2639. Find the Width of Columns of a Grid
-
-[力扣题目链接](https://leetcode.cn/problems/find-the-width-of-columns-of-a-grid/description)
 
 # 1017. Convert to Base -2
 
