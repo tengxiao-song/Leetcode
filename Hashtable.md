@@ -151,11 +151,11 @@ rec = defaultdict(int)
 
 这题除了counter以外，还可以用数组做，counter的map空间消耗比数组大。
 
-# 第15题. 三数之和(难点)
+# 第15题. 三数之和
 
 [力扣题目链接](https://leetcode.cn/problems/3sum/)
 
-### 去重逻辑的思考(难点)
+### 去重逻辑的思考
 ```Python
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
