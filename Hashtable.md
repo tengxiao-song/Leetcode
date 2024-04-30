@@ -155,7 +155,7 @@ rec = defaultdict(int)
 
 [力扣题目链接](https://leetcode.cn/problems/3sum/)
 
-### 去重逻辑的思考
+### 去重，剪枝逻辑的思考
 ```Python
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
@@ -163,6 +163,9 @@ class Solution:
         nums.sort()
         
         for i in range(len(nums)):
+            # 因为nums sort过了，后续的元素都比nums[i]大，所以不用后序遍历了
+            if nums[i] > 0:
+                return res
             
             # 跳过相同的元素以避免重复
             if i > 0 and nums[i] == nums[i - 1]:
@@ -197,7 +200,47 @@ class Solution:
 
 [力扣题目链接](https://leetcode.cn/problems/4sum/)
 
+类似的去重和剪枝逻辑
 
+但是有一些细节需要注意，例如： 不要判断nums[k] > target 就返回了，三数之和 可以通过 nums[i] > 0 就返回了，因为 0 已经是确定的数了，四数之和这道题目 target是任意值。比如：数组是[-4, -3, -2, -1]，target是-10，不能因为-4 > -10而跳过。但是我们依旧可以去做剪枝，逻辑变成nums[i] > target && (nums[i] >=0 || target >= 0)就可以了。
+
+
+```py
+class Solution(object):
+    def fourSum(self, nums, target):
+        res = []
+        nums = sorted(nums)
+        for i in range(len(nums)-3):
+            if (nums[i] > 0 and target > 0 and nums[i] > target):    #剪枝
+                break;
+            if i > 0 and nums[i] == nums[i-1]:    #去重
+                continue
+            for j in range(i+1, len(nums)-2):
+                if (nums[i]+nums[j]>0 and target > 0 and nums[i]+nums[j]>target):    #剪枝
+                    break
+                if j > i + 1 and nums[j] == nums[j-1]:    #去重
+                    continue
+                left = j + 1
+                right = len(nums)-1
+                while left < right:
+                    if left > j + 1 and nums[left] == nums[left-1]:
+                        left += 1
+                        continue
+                    if right < len(nums)-1 and nums[right] == nums[right+1]:
+                        right -= 1
+                        continue
+                    total = nums[i]+nums[j]+nums[left]+nums[right]
+                    if total == target:
+                        res.append([nums[i],nums[j],nums[left],nums[right]])
+                        left += 1
+                        right -= 1
+                    elif total > target:
+                        right -= 1
+                    else:
+                        left += 1
+        return res
+
+```
 # 205. 同构字符串
 
 [力扣题目链接](https://leetcode.cn/problems/isomorphic-strings/)
