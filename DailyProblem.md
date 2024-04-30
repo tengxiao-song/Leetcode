@@ -276,3 +276,45 @@ class Solution(object):
                 mat[i][j] = diagonal[i-j].pop()
         return mat
 ```
+
+# 2462. Total Cost to Hire K Workers
+
+[力扣题目链接](https://leetcode.cn/problems/total-cost-to-hire-k-workers/description)
+
+使用heap
+
+```py
+class Solution(object):
+    def totalCost(self, costs, k, candidates):
+        res = 0
+        q = []
+        n = len(costs)
+        left = candidates - 1
+        right = n - candidates
+        # 初始时，我们需要将costs数组中的前candidates和后candidates加入heap
+        # 如果两部分candidates重叠了，那么我们一次加入所有元素，避免重复
+        if left + 1 < right:
+            for i in range(left+1):
+                heappush(q, (costs[i],i))
+            for i in range(right, n):
+                heappush(q, (costs[i],i))
+        else:
+            for i in range(n):
+                heappush(q, (costs[i],i))
+
+        # 选k人，每次选人pop heap元素
+        for i in range(k):
+            cost, index = heappop(q)
+            res += cost
+            # 如果candidates还没有重叠，我们可以继续加入candidates
+            if left + 1 < right:
+                if index < left + 1:
+                    left += 1
+                    heappush(q, (costs[left],left))
+                else:
+                    right -= 1
+                    heappush(q, (costs[right],right))
+            
+        return res
+```
+
