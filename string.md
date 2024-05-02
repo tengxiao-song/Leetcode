@@ -16,12 +16,43 @@
 # 151.翻转字符串里的单词
 
 [力扣题目链接](https://leetcode.cn/problems/reverse-words-in-a-string/)
-**不要使用辅助空间，空间复杂度要求为O(1)。**
-所以解题思路如下：
+**不要使用辅助空间，空间复杂度要求为O(1)。** python必须使用空间，不能直接做string assignment。
+
+解题思路如下：
 
 * 移除多余空格
 * 将整个字符串反转
 * 将每个单词反转
+
+```py
+class Solution(object):
+    def reverseWords(self, s):
+        left = 0
+        right = len(s) - 1
+        # delete leading white space
+        while left <= right and s[left] == " ":
+            left += 1
+        # delete trailing white space
+        while right >= left and s[right] == " ":
+            right -= 1
+        words = []
+        # delete extra middle white space
+        while left <= right:
+            if s[left] != " " or words[-1] != " ":
+                words.append(s[left])
+            left += 1
+        # reverse the entire string
+        words = words[::-1]
+        words.append(" ")
+        left = 0
+        # reverse each word
+        for i in range(len(words)):
+            if words[i] == " ":
+                words[left:i] = words[left : i][::-1]
+                left = i + 1
+        return "".join(words)[:-1]
+
+```
 # 28. 实现 strStr() (KMP不懂)
 
 [力扣题目链接](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)
