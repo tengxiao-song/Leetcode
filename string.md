@@ -105,11 +105,33 @@ class Solution(object):
 
 ```
 
-# 459.重复的子字符串 (KMP不懂）
+# 459.重复的子字符串
 
 [力扣题目链接](https://leetcode.cn/problems/repeated-substring-pattern/)
-KMP
 
+在由重复子串组成的字符串中，最长相等前后缀不包含的子串就是最小重复子串，这里拿字符串s：abababab 来举例，ab就是最小重复单位，如图所示：
+
+![图三](https://code-thinking-1253855093.file.myqcloud.com/pics/20220728205249.png)
+
+数组长度减去最长相同前后缀的长度相当于是第一个周期的长度，也就是一个周期的长度，如果这个周期可以被整除，就说明整个数组就是这个周期的循环。
+
+```py
+class Solution(object):
+    def repeatedSubstringPattern(self, s):
+        n = len(s)
+        next = [0] * n
+        j = 0
+        for i in range(1, n):
+            while j > 0 and s[i] != s[j]:
+                j = next[j-1]
+            if s[i] == s[j]:
+                j += 1
+                next[i] = j
+        # 因为要覆盖到整个s，所以用最后一位的最长前后缀
+        if next[-1] != 0 and len(s) % (len(s) - next[-1]) == 0:
+            return True
+        return False
+```
 
 # 925.长按键入
 [力扣题目链接](https://leetcode.cn/problems/long-pressed-name/)
