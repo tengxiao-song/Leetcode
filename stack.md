@@ -16,6 +16,34 @@
  
 在push数据的时候，只要数据放进输入栈就好，**但在pop的时候，操作就复杂一些，输出栈如果为空，就把进栈数据全部导入进来（注意是全部导入）**，再从出栈弹出数据，如果输出栈不为空，则直接从出栈弹出数据就可以了。
 
+```py
+class MyQueue(object):
+
+    def __init__(self):
+        self.input_ = []
+        self.output = []
+
+    def push(self, x):
+        self.input_.append(x)
+
+    # 如果queue的加入顺序是1，2，3，那么queue的弹出顺序是1，2，3. input栈的元素是1，2，3, 直接用pop的话顺序是反的.
+    # 我们把input的元素用pop加入output，output的元素是3，2，1，再使用pop得到正确的顺序（负负得正）
+    def pop(self):
+        if self.output:
+            return self.output.pop()
+        else:
+            for i in range(len(self.input_)-1):
+                self.output.append(self.input_.pop())
+            return self.input_.pop()
+
+    def peek(self):
+        res = self.pop()
+        self.output.append(res)
+        return res
+
+    def empty(self):
+        return not (self.output or self.input_)
+```
 # 225. 用队列实现栈
 
 [力扣题目链接](https://leetcode.cn/problems/implement-stack-using-queues/)
