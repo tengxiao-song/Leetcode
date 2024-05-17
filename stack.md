@@ -81,6 +81,25 @@ class MyStack(object):
 
 [力扣题目链接](https://leetcode.cn/problems/valid-parentheses/)
 
+加入右括号的方法
+```py
+class Solution(object):
+    def isValid(self, s):
+        stack = []
+        for i in s:
+            if i == "(":
+                stack.append(")")
+            elif i == "[":
+                stack.append("]")
+            elif i == "{":
+                stack.append("}")
+            # 处理右括号多了，左右括号不一致的情况
+            elif not stack or stack.pop() != i:
+                return False
+        # 处理左括号多了的情况
+        return not stack
+```
+
 # 1047. 删除字符串中的所有相邻重复项
 
 [力扣题目链接](https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/)
