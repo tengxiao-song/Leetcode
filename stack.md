@@ -51,29 +51,30 @@ class MyQueue(object):
 只能用popleft(), 不能用res[-1]
 
 优化，使用一个队列实现
-```
-class MyStack:
+```py
+class MyStack(object):
 
     def __init__(self):
-        self.que = deque()
+        self.q = collections.deque()
 
-    def push(self, x: int) -> None:
-        self.que.append(x)
+    def push(self, x):
+        self.q.append(x)
 
-    def pop(self) -> int:
-        for i in range(len(self.que)-1):
-            self.que.append(self.que.popleft())
-        return self.que.popleft()
+    # 重复添加前size-1的元素，然后返回处理后的第一个元素(也就是处理前的最后一个元素)
+    def pop(self):
+        for i in range(len(self.q)-1):
+            self.q.append(self.q.popleft())
+        return self.q.popleft()
 
-    def top(self) -> int:
-        for i in range(len(self.que)-1):
-            self.que.append(self.que.popleft())
-        temp = self.que.popleft()
-        self.que.append(temp)
-        return temp
 
-    def empty(self) -> bool:
-        return not self.que
+    def top(self):
+        res = self.pop()
+        self.q.append(res)
+        return res
+
+
+    def empty(self):
+        return not self.q
 ```
 
 # 20. 有效的括号
