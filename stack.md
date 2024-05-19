@@ -130,7 +130,26 @@ python3 的除法 "/" 是浮点除法， "-3 / 2 = -1.5" ；
 
 用deque保留元素的下标，如果新元素更大，从后往前pop掉deque的元素。保证了q[0]一定是当前窗口最大的元素。
 
-针对滑动区间，因为保存的是下标，如果下标小于 i - k 也就是在窗口之外，从前往后pop元素直到满足要求。由于最靠前的元素一定是最大的，在满足区间内选中第一个元素即可。
+针对滑动区间，因为保存的是下标，如果q[0]小于等于 i - k 也就是在窗口之外，把q[0] pop掉。由于最靠前的元素一定是最大的，在满足区间内选中第一个元素即可。
+
+```py
+class Solution(object):
+    def maxSlidingWindow(self, nums, k):
+        q = deque()
+        for i in range(k):
+            while q and nums[q[-1]] < nums[i]:
+                q.pop()
+            q.append(i)
+        res = [nums[q[0]]]
+        for i in range(k,len(nums)):
+            while q and nums[q[-1]] < nums[i]:
+                q.pop()
+            q.append(i)
+            if q[0] <= i - k:
+                q.popleft()
+            res.append(nums[q[0]])
+        return res
+```
 
 # 347.前 K 个高频元素
 
