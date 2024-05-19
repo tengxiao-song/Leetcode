@@ -318,3 +318,34 @@ class Solution(object):
         return res
 ```
 
+# 999. Available Captures for Rook
+
+[力扣题目链接](https://lleetcode.cn/problems/available-captures-for-rook/description/)
+
+使用方向数组代替四个for循环
+```py
+class Solution(object):
+    def numRookCaptures(self, board):
+        row, col = 0, 0
+        for i in range(len(board)):
+            for j in range(len(board)):
+                if board[i][j] == "R":
+                    row = i
+                    col = j
+                    break
+        res = 0
+        move_x = [0,1,-1,0]
+        move_y = [1,0,0,-1]
+        for i in range(4):
+            step = 0
+            while True:
+                new_row = row + step * move_x[i]
+                new_col = col + step * move_y[i]
+                if new_row < 0 or new_row >= len(board) or new_col < 0 or new_col >= len(board[0]) or board[new_row][new_col] == "B":
+                    break
+                elif board[new_row][new_col] == "p":
+                    res += 1
+                    break
+                step += 1
+        return res
+```
