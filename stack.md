@@ -132,6 +132,8 @@ python3 的除法 "/" 是浮点除法， "-3 / 2 = -1.5" ；
 
 针对滑动区间，因为保存的是下标，如果q[0]小于等于 i - k 也就是在窗口之外，把q[0] pop掉。由于最靠前的元素一定是最大的，在满足区间内选中第一个元素即可。
 
+有点单调栈队列的意思。
+
 ```py
 class Solution(object):
     def maxSlidingWindow(self, nums, k):
@@ -155,16 +157,18 @@ class Solution(object):
 
 [力扣题目链接](https://leetcode.cn/problems/top-k-frequent-elements/)
 
-```
+Python heapq:  elements are primarily sorted by the first element of the tuple, for tuples with the same first element, they are further sorted by the second element.
+
+```py
+class Solution(object):
+    def topKFrequent(self, nums, k):
         import heapq
         count = Counter(nums)
         res = []
-        for key, value in count.items():
-            if len(res) >= k:
-                if value > res[0][0]:
-                    heapq.heapreplace(res,(value,key))
-            else:
-                heapq.heappush(res, (value,key))
-        return [item[1] for item in res]
+        for key, val in count.items():
+            heapq.heappush(res,(val,key))
+            if len(res) > k:
+                heapq.heappop(res)
+        return [i[1] for i in res]
 ```
 
