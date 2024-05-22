@@ -349,3 +349,30 @@ class Solution(object):
                 step += 1
         return res
 ```
+
+# 2831. Find the Longest Equal Subarray (有疑问）
+
+[力扣题目链接](https://leetcode.cn/problems/find-the-longest-equal-subarray/description/)
+
+hashmap + sliding window
+
+假定给定区间 [l,r]，此时元素 x 在区间出现的次数为 cnt[x]，则该区间中以要构造以 x 为等值子数组需要删除的元素个数即为 r−l+1−cnt[x]，如果此时 r−l+1−cnt[x]≤k ，则可以构成一个符合题意的等值子数组。
+
+```py
+class Solution(object):
+    def longestEqualSubarray(self, nums, k):
+        count = defaultdict(list)
+        for i, num in enumerate(nums):
+            count[num].append(i)
+        res = 0
+        for item in count.values():
+            j = 0
+            # shrink the window,
+            for i in range(len(item)):
+                # 不理解这行while
+                while item[i]-item[j]-(i-j) > k:
+                    j += 1
+                res = max(res, i-j+1)
+        return res
+
+```
