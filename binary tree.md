@@ -76,10 +76,44 @@ struct TreeNode {
 ```
 # 二叉树的递归遍历
 
+**递归三部曲**
+
+1. **确定递归函数的参数和返回值：**
+确定哪些参数是递归的过程中需要处理的，那么就在递归函数里加上这个参数， 并且还要明确每次递归的返回值是什么进而确定递归函数的返回类型。
+
+2. **确定终止条件：**
+写完了递归算法,  运行的时候，经常会遇到栈溢出的错误，就是没写终止条件或者终止条件写的不对，操作系统也是用一个栈的结构来保存每一层递归的信息，如果递归没有终止，操作系统的内存栈必然就会溢出。
+
+3. **确定单层递归的逻辑：**
+确定每一层递归需要处理的信息。在这里也就会重复调用自己来实现递归的过程。
+
 * [144.二叉树的前序遍历](https://leetcode.cn/problems/binary-tree-preorder-traversal/)
 * [145.二叉树的后序遍历](https://leetcode.cn/problems/binary-tree-postorder-traversal/)
 * [94.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/)
 
+也可以使用**非递归遍历**，使用stack
+
+```python
+# 前序遍历-迭代-LC144_二叉树的前序遍历
+class Solution:
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
+        # 根结点为空则返回空列表
+        if not root:
+            return []
+        stack = [root]
+        result = []
+        while stack:
+            node = stack.pop()
+            # 中结点先处理
+            result.append(node.val)
+            # 右孩子先入栈，因为要用到stack的pop
+            if node.right:
+                stack.append(node.right)
+            # 左孩子后入栈
+            if node.left:
+                stack.append(node.left)
+        return result
+```
 # 二叉树层序遍历
 
 ## 算法公开课
