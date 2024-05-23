@@ -376,3 +376,20 @@ class Solution(object):
         return res
 
 ```
+
+# 1673. Find the Most Competitive Subsequence
+
+[力扣题目链接](https://leetcode.cn/problems/find-the-most-competitive-subsequence/description)
+
+单调栈的使用
+```py
+class Solution(object):
+    def mostCompetitive(self, nums, k):
+        res = []
+        for i, num in enumerate(nums):
+            # 当栈不为空且未来元素数量+当前元素数量大于需要数量且栈尾元素大前元素
+            while len(res) > 0 and len(nums)-i+len(res) > k and res[-1] > num:
+                res.pop()
+            res.append(num)
+        return res[:k]
+```
