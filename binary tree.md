@@ -137,6 +137,22 @@ class Solution:
 
 [力扣题目链接](https://leetcode.cn/problems/symmetric-tree/)
 
+要用后续遍历，因为需要先收集孩子的信息再处理当前元素。
+
+```py
+class Solution(object):
+    def isSymmetric(self, root):
+        def dfs(left,right):
+            if not left and not right:
+                return True
+            elif (not left or not right) or (left.val != right.val):
+                return False
+            outside = dfs(left.left, right.right)    # 左
+            inside = dfs(left.right, right.left)    # 右
+            return outside and inside                # 中
+        return dfs(root.left, root.right)
+```
+
 # 222.完全二叉树的节点个数(难题)
 
 [力扣题目链接](https://leetcode.cn/problems/count-complete-tree-nodes/)
