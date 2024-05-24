@@ -393,3 +393,26 @@ class Solution(object):
             res.append(num)
         return res[:k]
 ```
+
+# 2903. Find Indices With Index and Value Difference 1
+
+[力扣题目链接](https://leetcode.cn/problems/find-indices-with-index-and-value-difference-i/description)
+
+模拟，i只用模拟到len(nums)-indexDifference就可以，因为要满足indexDifference间隔
+
+```py
+class Solution(object):
+    def findIndices(self, nums, indexDifference, valueDifference):
+        minIndex, maxIndex = 0, 0
+        for j in range(indexDifference, len(nums)):
+            i = j - indexDifference
+            if nums[i] < nums[minIndex]:
+                minIndex = i
+            elif nums[i] > nums[maxIndex]:
+                maxIndex = i 
+            if nums[j] - nums[minIndex] >= valueDifference:
+                return [j, minIndex]
+            elif nums[maxIndex] - nums[j] >= valueDifference:
+                return [maxIndex, j]
+        return [-1,-1]
+```
