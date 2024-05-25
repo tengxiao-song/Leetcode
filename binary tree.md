@@ -210,7 +210,7 @@ class Solution(object):
         return dfs(root)
 ```
 
-# 222.完全二叉树的节点个数(难题)
+# 222.完全二叉树的节点个数(小于O(n))
 
 [力扣题目链接](https://leetcode.cn/problems/count-complete-tree-nodes/)
 
@@ -219,6 +219,31 @@ class Solution(object):
 对于情况一，可以直接用 2^树深度 - 1 来计算，注意这里根节点深度为1。
 
 对于情况二，分别递归左孩子，和右孩子，递归到某一深度一定会有左孩子或者右孩子为满二叉树，然后依然可以按照情况1来计算。
+
+```py
+class Solution(object):
+    def countNodes(self, root):
+        def dfs(root):
+            if not root:
+                return 0
+            left_ptr = root.left
+            right_ptr = root.right
+            left_level = 1
+            right_level = 1
+            # 记录最左边高度和最右边高度，如果一样说明中间node都是满的，直接使用公示即可，省去了遍历中间节点。
+            while left_ptr:
+                left_ptr = left_ptr.left
+                left_level += 1
+            while right_ptr:
+                right_ptr = right_ptr.right
+                right_level += 1
+            if left_level == right_level:
+                return 2**left_level-1
+            left_num = dfs(root.left)
+            right_num = dfs(root.right)
+            return left_num + right_num + 1
+        return dfs(root)
+```
 
 # 110.平衡二叉树(难题)
 
