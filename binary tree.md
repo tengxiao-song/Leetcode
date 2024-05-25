@@ -153,6 +153,63 @@ class Solution(object):
         return dfs(root.left, root.right)
 ```
 
+# 104.二叉树的最大深度
+
+* [104.二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/)
+* [559.n叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-n-ary-tree/)
+
+本题可以使用前序（中左右），也可以使用后序遍历（左右中），使用前序求的就是深度，使用后序求的是高度。
+* 二叉树节点的深度：指从根节点到该节点的最长简单路径边的条数或者节点数（取决于深度从0开始还是从1开始）
+* 二叉树节点的高度：指从该节点到叶子节点的最长简单路径边的条数或者节点数（取决于高度从0开始还是从1开始）
+
+二叉树的最大深度就是这棵树的高度，可以用后续遍历。（单求深度要用前序遍历）
+
+```py
+class Solution(object):
+    def maxDepth(self, root):
+        def dfs(root):
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            return max(left,right) + 1
+        return dfs(root)
+```
+```py
+class Solution(object):
+    def maxDepth(self, root):
+        def dfs(root):
+            if not root:
+                return 0
+            high = 0
+            for child in root.children:
+                high = max(high, dfs(child))
+            return high + 1
+        return dfs(root)
+        
+```
+
+# 111.二叉树的最小深度
+
+[力扣题目链接](https://leetcode.cn/problems/minimum-depth-of-binary-tree/)
+
+后续遍历 + 注意找的是根结点到**叶子**的最短深度
+```py
+class Solution(object):
+    def minDepth(self, root):
+        def dfs(root):
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            if root.left and not root.right:
+                return left + 1
+            if not root.left and root.right:
+                return right + 1
+            return min(left,right) + 1
+        return dfs(root)
+```
+
 # 222.完全二叉树的节点个数(难题)
 
 [力扣题目链接](https://leetcode.cn/problems/count-complete-tree-nodes/)
