@@ -416,3 +416,28 @@ class Solution(object):
                 return [maxIndex, j]
         return [-1,-1]
 ```
+# 2028. Find Missing Observations
+
+[力扣题目链接](https://leetcode.cn/problems/find-missing-observations/)
+
+```py
+class Solution(object):
+    def missingRolls(self, rolls, mean, n):
+        total = mean * (len(rolls) + n)
+        m_sum = sum(rolls)
+        # calculate the sum and verfiy it's within the range (possible for dice)
+        n_sum = total - m_sum
+        if not (n <= n_sum and n_sum <= n*6):
+            return []
+        res = [0] * n
+        # calculate the quotient and remainder, remainder means the extra values needed to achieve sum (remainder is less than quotient)
+        quotient = n_sum / n
+        remainder = n_sum % n
+        for i in range(n):
+            if i < remainder:
+                res[i] = quotient + 1
+            else:
+                res[i] = quotient
+        return res
+        
+```
