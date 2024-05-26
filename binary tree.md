@@ -245,14 +245,16 @@ class Solution(object):
         return dfs(root)
 ```
 
-# 110.平衡二叉树(难题)
+# 110.平衡二叉树
 
 [力扣题目链接](https://leetcode.cn/problems/balanced-binary-tree/)
 
 分别求出其左右子树的高度，然后如果差值小于等于1，则返回当前二叉树的高度，否则返回-1，表示已经不是二叉平衡树了。
 
 用后序遍历，这样如果有子树返回-1，当前节点也可以返回-1.
-```
+
+每次递归就可以传达两个信息，一个是子树是否平衡，如果平衡获得高度
+```py
 def isBalanced(self, root):
         def dfs(root):
             if not root:
