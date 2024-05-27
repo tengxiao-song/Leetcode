@@ -280,9 +280,33 @@ def isBalanced(self, root):
 [力扣题目链接](https://leetcode.cn/problems/sum-of-left-leaves/)
 
 
-# 513.找树左下角的值
+# 513.找树左下角的值 (用递归）
 
 [力扣题目链接](https://leetcode.cn/problems/find-bottom-left-tree-value/)
+
+层序可以很直白，简单的求出。这里用递归+回溯练习。
+
+```py
+class Solution(object):
+    def findBottomLeftValue(self, root):
+        # 定义两个全局变量，持续更新
+        self.max_depth = float("-inf")
+        self.res = 0
+        def dfs(root,depth):
+            if not root:
+                return
+            # 如果是叶子且深度更大就更新变量，因为一直是先处理左子树再处理右子树，可以确保更新的leftmost value
+            if not root.left and not root.right:
+                if depth > self.max_depth:
+                    self.max_depth = depth
+                    self.res = root.val
+            depth += 1
+            dfs(root.left,depth)
+            dfs(root.right,depth)
+            depth -= 1    # 回溯
+        dfs(root, 0)
+        return self.res
+```
 
 # 112. 路径总和
 
