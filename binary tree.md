@@ -272,6 +272,8 @@ def isBalanced(self, root):
 
 [力扣题目链接](https://leetcode.cn/problems/binary-tree-paths/)
 
+递归中还有回溯（已经收集到了125 所以需要弹出左子树25 再去找右子树的3）
+
 
 # 404.左叶子之和
 
