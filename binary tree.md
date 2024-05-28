@@ -312,10 +312,30 @@ class Solution(object):
 
 [力扣题目链接](https://leetcode.cn/problems/path-sum/)
 
-这里不用手动剪去root.val，因为int variable用的是pass by value，不会改变。
+全局变量和array需要回溯，如果传参的话可以不用。
 
-257题如果用array做的话，当append元素的时候会改变所有的array，因为用的是pass by reference。
-
+```py
+class Solution(object):
+    def hasPathSum(self, root, targetSum):
+        self.path = 0
+        def dfs(root):
+            if not root:
+                return False
+            self.path += root.val
+            # 如果为叶子结点，判断总和是否是target，如果是就不用管后续直接返回True，如果不是需要回溯再返回False
+            if not root.left and not root.right:
+                if self.path == targetSum:
+                    return True
+                else:
+                    self.path -= root.val
+                    return False
+            # 如果不是叶子结点，就获取左右子树的返回值，回溯并返回
+            left = dfs(root.left)
+            right = dfs(root.right)
+            self.path -= root.val
+            return left or right
+        return dfs(root)
+```
 # 106.从中序与后序遍历序列构造二叉树
 
 [力扣题目链接](https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
