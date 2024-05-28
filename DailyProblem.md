@@ -441,3 +441,48 @@ class Solution(object):
         return res
         
 ```
+
+# 2981. Find Longest Special Substring That Occurs Thrice
+
+[力扣题目链接](https://leetcode.cn/problems/find-longest-special-substring-that-occurs-thrice-i/description/)
+
+更新答案时，主要有三种：
+
+最长的 chs[0] 可贡献出 3 个长为 chs[0]−2的子串，并且需要满足 chs[0]>2。
+
+当 chs[0] 与 chs[1] 相等时，可贡献出 4 个长为 chs[0]−1 的子串。不等时可由 chs[0] 贡献出 2 个长为 chs[1] 的子串，加上 chs[1] 本身一共 3 个，并且需要满足 chs[0]>1。
+
+可由 chs[0] 与 chs[1] 加上 chs[2] 本身贡献 3 个长为 chs[2] 的子串。
+
+
+```py
+class Solution(object):
+    def maximumLength(self, s):
+        length = [[]for _ in range(26)]
+        count = 0
+        # 第一步，用移动窗口记录每单个字符重复的长度
+        for i in range(len(s)):
+            count += 1
+            if i+1 == len(s) or s[i] != s[i+1]:
+                ch = ord(s[i]) - ord('a')
+                length[ch].append(count)
+                count = 0
+                # 把长度长的往前推，只需要维护3个就行
+                for j in range(len(length[ch])-1,0,-1):
+                    if length[ch][j] > length[ch][j-1]:
+                        length[ch][j], length[ch][j-1] = length[ch][j-1],length[ch][j]
+                    else:
+                        break
+                if len(length[ch]) > 3:
+                    length[ch].pop()
+        res = -1
+        # 第二步，对于每个字符，更新最长长度（前提是出现三次）
+        for i in range(26):
+            if len(length[i]) > 0 and length[i][0] > 2:
+                res = max(res, length[i][0]-2)
+            if len(length[i]) > 1 and length[i][0] > 1:
+                res = max(res,min(length[i][0]-1, length[i][1]))
+            if len(length[i]) > 2:
+                res = max(res, length[i][2])
+        return res
+```
