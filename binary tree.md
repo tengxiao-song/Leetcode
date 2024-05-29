@@ -340,6 +340,35 @@ class Solution(object):
 
 [力扣题目链接](https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
 
+# 105.从中序与前序遍历序列构造二叉树
+
+[力扣题目链接](https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/)
+
+```py
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        if not preorder:
+            return None
+        root_val = preorder[0]
+        root = TreeNode(root_val)
+        separator_idx = inorder.index(root_val)
+
+        # 第四步: 切割inorder数组. 得到inorder数组的左,右半边.
+        inorder_left = inorder[:separator_idx]
+        inorder_right = inorder[separator_idx + 1:]
+
+        # 第五步: 切割preorder数组. 得到preorder数组的左,右半边.
+        # ⭐️ 重点: 中序数组大小一定跟前序数组大小是相同的.
+        preorder_left = preorder[1:1 + len(inorder_left)]
+        preorder_right = preorder[1 + len(inorder_left):]
+
+        # 第六步: 递归
+        root.left = self.buildTree(preorder_left, inorder_left)
+        root.right = self.buildTree(preorder_right, inorder_right)
+        # 第七步: 返回答案
+        return root
+```
+
 # 654.最大二叉树
 
 [力扣题目地址](https://leetcode.cn/problems/maximum-binary-tree/)
