@@ -377,6 +377,21 @@ class Solution:
 
 [力扣题目链接](https://leetcode.cn/problems/merge-two-binary-trees/)
 
+直接在root1上进行修改，节省空间复杂度。
+
+```py
+class Solution(object):
+    def mergeTrees(self, root1, root2):
+        if not root1:
+            return root2
+        if not root2:
+            return root1
+        root1.val += root2.val
+        root1.left = self.mergeTrees(root1.left,root2.left)
+        root1.right = self.mergeTrees(root1.right,root2.right)
+        return root1
+```
+
 # 700.二叉搜索树中的搜索
 
 [力扣题目地址](https://leetcode.cn/problems/search-in-a-binary-search-tree/)
