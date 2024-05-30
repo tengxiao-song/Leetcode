@@ -379,6 +379,8 @@ class Solution:
 
 直接在root1上进行修改，节省空间复杂度。
 
+构建二叉树一般用前序遍历，先设置好root再设置root的左右子树。
+
 ```py
 class Solution(object):
     def mergeTrees(self, root1, root2):
