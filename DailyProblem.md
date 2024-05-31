@@ -486,3 +486,24 @@ class Solution(object):
                 res = max(res, length[i][2])
         return res
 ```
+
+# 2981. Distribute Candies Among Children
+
+[力扣题目链接](https://leetcode.cn/problems/distribute-candies-among-children-i/description/)
+
+枚举第一个小朋友获得的糖果(最多可以是所有糖果或limit个), 如果n -  i > 2*limit，说明一定会有一个小朋友超出limit，无有效方案。
+
+如果n -  i <= 2*limit, 第二个小朋友至多可以分到min(n - i, limit),同时至少要分到max(0, n - i - limit)来确保第三个小朋友不会超出limit.
+
+那么可取的方案即min(n - i, limit) - max(0, n - i - limit) + 1个
+```py
+class Solution(object):
+    def distributeCandies(self, n, limit):
+        res = 0
+        for i in range(min(n,limit)+1):
+            if n -  i > 2*limit:
+                continue
+            res += min(n - i, limit) - max(0, n - i - limit) + 1
+        return res
+
+```
