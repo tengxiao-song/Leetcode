@@ -403,23 +403,24 @@ class Solution(object):
 [力扣题目链接](https://leetcode.cn/problems/validate-binary-search-tree/)
 
 可以用数组，或者直接搜索。这里是模拟中序搜索，先更新左节点的值，然后是中最后是后。
-```
-class Solution:
-    def __init__(self):
-        self.pre = None  # 用来记录前一个节点
 
+坑：不能单纯的比较左节点小于中间节点，右节点大于中间节点就完事了。 我们要比较的是 左子树所有节点小于中间节点，右子树所有节点大于中间节点。
+
+```py
+class Solution(object):
     def isValidBST(self, root):
-        if root is None:
-            return True
-
-        left = self.isValidBST(root.left)
-
-        if self.pre is not None and self.pre.val >= root.val:
-            return False
-        self.pre = root  # 记录前一个节点
-
-        right = self.isValidBST(root.right)
-        return left and right
+        self.pre = None
+        def dfs(root):
+            if not root:
+                return True
+            left = dfs(root.left)
+            if self.pre and self.pre.val >= root.val:
+                return False
+            else:
+                self.pre = root
+            right = dfs(root.right)
+            return left and right
+        return dfs(root)
 ```
 # 530.二叉搜索树的最小绝对差
 
