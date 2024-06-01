@@ -429,7 +429,10 @@ class Solution(object):
 # 501.二叉搜索树中的众数 (constant space/no hashmap)
 
 [力扣题目链接](https://leetcode.cn/problems/find-mode-in-binary-search-tree/)
-```
+
+98，530，501 都可以使用二叉树的特性（中序遍历）+self.pre（双指针）达到O(1)空间复杂度。
+
+```py
 class Solution(object):
     def findMode(self, root):
         self.count = 0
