@@ -484,6 +484,19 @@ class Solution(object):
 
 [力扣题目链接](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/)
 
+利用二叉搜索树的特性加速. 如果两个结点比当前结点都小，向左子树遍历。如果比当前结点都大，向右子树遍历。如果出现一大一小或者等于根结点的情况，直接返回即可。
+
+```py
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        if p.val < root.val and q.val < root.val:
+            return self.lowestCommonAncestor(root.left, p,q)
+        if p.val > root.val and q.val > root.val:
+            return self.lowestCommonAncestor(root.right,p,q)
+        return root
+```
+
+
 # 701.二叉搜索树中的插入操作
 
 [力扣题目链接](https://leetcode.cn/problems/insert-into-a-binary-search-tree/)
