@@ -465,23 +465,21 @@ class Solution(object):
 # 236. 二叉树的最近公共祖先 (又错)
 
 [力扣题目链接](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/)
-```
+
+后续遍历
+
+```py
 class Solution(object):
     def lowestCommonAncestor(self, root, p, q):
-        """
-        :type root: TreeNode
-        :type p: TreeNode
-        :type q: TreeNode
-        :rtype: TreeNode
-        """
         if not root or root == p or root == q:
             return root
         left = self.lowestCommonAncestor(root.left,p,q)
         right = self.lowestCommonAncestor(root.right,p,q)
-        if not left:return right    #case:都在右
+        if not left: return right    #case:都在右
         if not right: return left   #case:都在左
         return root         #case:左右各有一个
 ```
+
 # 235. 二叉搜索树的最近公共祖先
 
 [力扣题目链接](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/)
