@@ -501,25 +501,41 @@ class Solution(object):
 
 [力扣题目链接](https://leetcode.cn/problems/insert-into-a-binary-search-tree/)
 
-# 450.删除二叉搜索树中的节点(错)
+# 450.删除二叉搜索树中的节点(难)
 
 [力扣题目链接]( https://leetcode.cn/problems/delete-node-in-a-bst/)
 
-```
-class Solution:
+```py
+class Solution(object):
     def deleteNode(self, root, key):
-        if root is None:  # 如果根节点为空，直接返回
+        def dfs(root,key):
+            if not root:
+                return
+            if root.val == key:
+                # 删除结点为叶子结点直接返回null
+                if not root.left and not root.right:
+                    return
+                # 删除结点没有右子树，直接返回左子树
+                elif root.left and not root.right:
+                    return root.left
+                # 删除结点没有左子树，直接返回右子树
+                elif not root.left and root.right:
+                    return root.right
+                # 删除结点左右子树都有，把左子树拼接到右子树的最左结点上，返回右子树
+                else:
+                    curr = root.right
+                    while curr.left:
+                        curr = curr.left
+                    curr.left = root.left
+                    return root.right
+            # 若当前结点小于删除结点值，接住更新后的右子树。
+            if root.val < key:
+                root.right = dfs(root.right,key)
+            if root.val > key:
+                root.left = dfs(root.left,key)
+            # 返回当前结点
             return root
-        if root.val == key:  # 找到要删除的节点
-            if root.right is None:  # 如果右子树为空，直接返回左子树作为新的根节点
-                return root.left
-            cur = root.right
-            while cur.left:  # 找到右子树中的最左节点
-                cur = cur.left
-            root.val, cur.val = cur.val, root.val  # 将要删除的节点值与最左节点值交换,这样做到删除节点时必定返回None
-        root.left = self.deleteNode(root.left, key)  # 在左子树中递归删除目标节点
-        root.right = self.deleteNode(root.right, key)  # 在右子树中递归删除目标节点
-        return root
+        return dfs(root,key)
 ```
 
 
