@@ -538,29 +538,26 @@ class Solution(object):
         return dfs(root,key)
 ```
 
-
 # 669. 修剪二叉搜索树(错)
 
 [力扣题目链接](https://leetcode.cn/problems/trim-a-binary-search-tree/)
 
 对根结点进行深度优先遍历。对于当前访问的结点，如果结点为空结点，直接返回空结点；如果结点的值小于low，那么说明该结点及它的左子树都不符合要求，我们返回对它的右结点进行修剪后的结果；如果结点的值大于high，那么说明该结点及它的右子树都不符合要求，我们返回对它的左子树进行修剪后的结果；如果结点的值位于区间，我们将结点的左结点设为对它的左子树修剪后的结果，右结点设为对它的右子树进行修剪后的结果。
-```
+
+```py
 class Solution(object):
     def trimBST(self, root, low, high):
-        """
-        :type root: TreeNode
-        :type low: int
-        :type high: int
-        :rtype: TreeNode
-        """
-        if not root: return root
-        if root.val < low:
-            return self.trimBST(root.right,low,high)
-        if root.val > high:
-            return self.trimBST(root.left,low,high)
-        root.left = self.trimBST(root.left, low, high)
-        root.right = self.trimBST(root.right,low,high)
-        return root
+        def dfs(root,low,high):
+            if not root:
+                return 
+            if root.val < low:
+                return dfs(root.right,low,high)
+            if root.val > high:
+                return dfs(root.left,low,high)
+            root.left = dfs(root.left,low,high)
+            root.right = dfs(root.right,low,high)
+            return root
+        return dfs(root,low,high)
 ```
 
 # 108.将有序数组转换为二叉搜索树
