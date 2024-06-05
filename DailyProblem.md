@@ -507,3 +507,24 @@ class Solution(object):
         return res
 
 ```
+
+# 2938. Separate Black and White Balls（优解）
+
+[力扣题目链接](https://leetcode.cn/problems/separate-black-and-white-balls/description/)
+
+不用纠结中间过程，核心就是冒泡排序的思想， 0的前面有多少个1，是一定要做多少次操作的。
+
+```py
+class Solution(object):
+    def minimumSteps(self, s):
+        cnt1=0
+        ans=0
+        for c in s:
+            if c=='1':
+                cnt1+=1
+            else:
+                ans +=cnt1
+        return ans
+```
+
+
