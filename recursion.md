@@ -24,6 +24,12 @@ void backtracking(参数) {
 # 第77题. 组合(剪枝)
 
 [力扣题目链接](https://leetcode.cn/problems/combinations/ )
+
+如果for循环选择的起始位置之后的元素个数 已经不足 我们需要的元素个数了，那么就没有必要搜索了。
+
+- if (n+1 - index) < (k - len(path)): return
+                                    
+比如n=4，k=3，一个空path至少要从2开始搜索，3和4开始的可以剪去。
 ```py
 class Solution(object):
     def combine(self, n, k):
@@ -37,8 +43,7 @@ class Solution(object):
             if len(path) == k:
                 self.res.append(path[:])
                 return
-            for i in range(index,n - (k-len(path))+2):  #剪枝:如果for循环选择的起始位置之后的元素个数 已经不足 我们需要的元素个数了，那么就没有必要搜索了。
-                                                        #比如n=4，k=3，一个空path至少要从2开始搜索，3和4开始的可以剪去。
+            for i in range(index,n - (k-len(path))+2):  #剪枝
                 path.append(i)
                 dfs(i+1,n,k,path)
                 path.pop()
