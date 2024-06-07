@@ -51,9 +51,30 @@ class Solution(object):
         return self.res
 ```
 
-# 216.组合总和III
+# 216.组合总和III(剪枝）
 
 [力扣题目链接](https://leetcode.cn/problems/combination-sum-iii/)
+
+如果for循环选择的起始位置之后的元素个数 已经不足 我们需要的元素个数了，那么就没有必要搜索了。
+
+比如 k = 3, 至少也要从7开始得到[7,8,9], 从8，9开始没有意义。
+
+```py
+class Solution(object):
+    def combinationSum3(self, k, n):
+        res = []
+        def dfs(n,k,path,index):
+            if len(path) == k and sum(path) == n:
+                res.append(path[:])
+            elif len(path) > k or sum(path) > n:
+                return
+            for i in range(index,11-(k-len(path))):    # k-len(path)为需要的个数
+                path.append(i)
+                dfs(n,k,path,i+1)
+                path.pop()
+        dfs(n,k,[],1)
+        return res
+```
 
 # 17.电话号码的字母组合(又错)
 
