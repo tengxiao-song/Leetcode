@@ -80,23 +80,29 @@ class Solution(object):
 
 [力扣题目链接](https://leetcode.cn/problems/letter-combinations-of-a-phone-number/)
 
-index很关键
+单层逻辑：首先要取index指向的数字，并找到对应的字符集（手机键盘的字符集）。然后for循环来处理这个字符集。
 
-```py
-class Solution(object):
-    def letterCombinations(self, digits):
-        self.book = {'2':["a","b",'c'],'3':['d','e','f'],'4':['g','h','i'],'5':['j','k','l'],'6':['m','n','o'],'7':['p','q','r','s'],'8':['t','u','v'],'9':['w','x','y','z']}
-        self.res = []
-        if not digits:return []
-        def dfs(digits,index,path):
+这里for循环注可以直接从0开始，而不需要从startIndex开始遍历，因为本题每一个数字代表的是不同集合，也就是求不同集合之间的组合。
+
+```py3
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        phone = {"2":["a","b","c"],"3":["d","e","f"],"4":["g","h","i"],"5":["j","k","l"],"6":["m","n","o"],"7":["p","q","r","s"],"8":["t","u","v"],"9":["w","x","y","z"]}
+
+        res = []
+        if not digits: return res
+
+        def dfs(path,index):
             if index == len(digits):
-                self.res.append(path)
+                res.append("".join(path[:]))
                 return
-            letters = self.book[digits[index]]
-            for letter in letters:
-                dfs(digits,index+1,path+letter)
-        dfs(digits,0,"")
-        return self.res
+            letters = phone[digits[index]]
+            for i in range(len(letters)):
+                path.append(letters[i])
+                dfs(path, index+1)
+                path.pop()
+        dfs([],0)
+        return res
 ```
 
 # 39. 组合总和
