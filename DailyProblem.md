@@ -556,3 +556,37 @@ class Solution:
         res = max(res, dfs(0,n-1,nums[-2]+nums[-1]))
         return res     
 ```
+
+# 312. Burst Balloons(DP hard)
+
+[力扣题目链接](https://leetcode.cn/problems/burst-balloons/description/)
+
+假设这个区间是个开区间，最左边索引 i，最右边索引 j， “开区间” 的意思是，我们只能戳爆 i 和 j 之间的气球，i 和 j 不要戳。
+
+i 代表 start range，j 代表 end range，k 代表这个区间最后一个被戳破的气球。
+
+那么假设 dp[i][j] 表示开区间 (i,j) 内你能拿到的最多金币。
+
+那么这个情况下你在 (i,j) 开区间得到的金币可以由 dp[i][k] 和 dp[k][j] 进行转移。
+
+由于k是最后一个被戳破的，且i和j不能戳，如果你此刻选择戳爆气球 k，那么你得到的金币数量就是：
+
+total = dp[i][k] + val[i] * val[k] * val[j] + dp[k][j]
+
+
+```py3
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        # pad 前后处理边界值
+        nums = [1] + nums + [1]
+        n = len(nums)
+        rec = [[0]*(n) for _ in range(n)]
+        
+        for i in range(n-3,-1,-1):    # i是区间的开始索引，后面至少得有两个元素，所以从n-3开始
+            for j in range(i+2,n):    # j是区间的结束索引
+                for k in range(i+1,j):    # k为不能戳i，j区间内戳破的气球
+                    total = nums[i] * nums[k] * nums[j]
+                    total += rec[i][k] + rec[k][j]
+                    rec[i][j] = max(rec[i][j],total)
+        return rec[0][n-1]
+```
