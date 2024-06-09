@@ -109,6 +109,30 @@ class Solution:
 
 [力扣题目链接](https://leetcode.cn/problems/combination-sum/)
 
+```py3
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+        candidates.sort()    #为剪枝作准备
+
+        def dfs(path,index,total):
+            if total == target:
+                res.append(path[:])
+                return
+            elif total > target:
+                return
+            for i in range(index, len(candidates)):
+                if total + candidates[i] > target:     #剪枝：后续元素都会更大，直接break
+                    break
+                path.append(candidates[i])
+                total += candidates[i]
+                dfs(path, i, total)    # 允许重复选择元素
+                total -= candidates[i]
+                path.pop()
+        dfs([],0,0)
+        return res
+```
+
 # 40.组合总和II(又错)
 
 [力扣题目链接](https://leetcode.cn/problems/combination-sum-ii/)
