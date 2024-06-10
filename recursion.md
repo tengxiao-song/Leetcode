@@ -167,21 +167,20 @@ class Solution:
 [力扣题目链接](https://leetcode.cn/problems/palindrome-partitioning/)
 
 ```py
-class Solution(object):
-    def partition(self, s):
-        """
-        :type s: str
-        :rtype: List[List[str]]
-        """
-        self.res = []
-        def dfs(s,path):
-            if not s:
-                self.res.append(path[:])
-            for i in range(1,len(s)+1):
-                if s[:i] == s[:i][::-1]:
-                    dfs(s[i:],path+[s[:i]])
-        dfs(s,[])
-        return self.res
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        res = []
+        def dfs(path, index):
+            if index == len(s):
+                res.append(path[:])
+                return
+            for i in range(index, len(s)):
+                if s[index:i+1] == s[index:i+1][::-1]:
+                    path.append(s[index:i+1])
+                    dfs(path, i+1)
+                    path.pop()
+        dfs([],0)
+        return res
 ```
 
 # 93.复原IP地址
