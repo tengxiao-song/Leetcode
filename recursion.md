@@ -133,35 +133,34 @@ class Solution:
         return res
 ```
 
-# 40.组合总和II(又错)
+# 40.组合总和II
 
 [力扣题目链接](https://leetcode.cn/problems/combination-sum-ii/)
 
 去重逻辑很关键
 
 ```py
-class Solution(object):
-    def combinationSum2(self, candidates, target):
-        """
-        :type candidates: List[int]
-        :type target: int
-        :rtype: List[List[int]]
-        """
-        candidates.sort()
-        self.res = []
-        def dfs(candidates,target,index,path):
-            if sum(path) == target:
-                self.res.append(path[:])
-            elif sum(path) > target:
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+        candidates.sort()    # 为剪枝和去重做准备
+
+        def dfs(path, index, total):
+            if total == target:
+                res.append(path[:])
                 return
-            else:
-                for i in range(index,len(candidates)):
-                    //remove duplicates!!!
-                    if i > index and candidates[i] == candidates[i-1]:
-                        continue
-                    dfs(candidates,target,i+1,path+[candidates[i]])
-        dfs(candidates,target,0,[])
-        return self.res
+            for i in range(index, len(candidates)):
+                if i > index and candidates[i] == candidates[i-1]:    # 对同一树层使用过的元素进行跳过
+                    continue
+                if total + candidates[i] > target:    # 剪枝
+                    return
+                path.append(candidates[i])
+                total += candidates[i]
+                dfs(path,i+1, total)
+                total -= candidates[i]
+                path.pop()
+        dfs([], 0, 0)
+        return res
 ```
 # 131.分割回文串
 
