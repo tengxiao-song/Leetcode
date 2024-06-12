@@ -191,9 +191,13 @@ class Solution:
 
 [力扣题目链接](https://leetcode.cn/problems/subsets/)
 
+如果把 子集问题、组合问题、分割问题都抽象为一棵树的话，那么组合问题和分割问题都是收集树的叶子节点，而子集问题是找树的所有节点！
+
 # 90.子集II
 
 [力扣题目链接](https://leetcode.cn/problems/subsets-ii/)
+
+就是组合2去重逻辑和子集结合
 
 # 491.递增子序列
 
