@@ -203,28 +203,23 @@ class Solution:
 
 [力扣题目链接](https://leetcode.cn/problems/non-decreasing-subsequences/)
 
-```py
-class Solution(object):
-    def findSubsequences(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        self.res = []
-        def dfs(nums,path,index):
-            if not nums:
-                return
+```py3
+class Solution:
+    def findSubsequences(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        def dfs(path, index):
             if len(path) >= 2:
-                if path[-1] >= path[-2]:
-                    self.res.append(path[:])
-                else:
-                    return        #if not in ascending order, return immedaitely and aborts the later recursion
-            for i in range(index,len(nums)):
-                if nums[i] in nums[index:i]:        #prevents duplicates, because we can't order the nums
+                res.append(path[:])
+            lset = set()    # 每层定义一个set，来记录使用过的元素，如有重复直接跳过，由于是树层去重且每层有新set不用回溯set
+            for i in range(index, len(nums)):
+                if (path and nums[i] < path[-1]) or nums[i] in lset:    # 非递增跳过，加树层去重
                     continue
-                dfs(nums,path+[nums[i]],i+1)
-        dfs(nums,[],0)
-        return self.res
+                path.append(nums[i])
+                lset.add(nums[i])
+                dfs(path, i+1)
+                path.pop()
+        dfs([], 0)
+        return res
 ```
 
 # 46.全排列
