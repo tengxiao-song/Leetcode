@@ -590,3 +590,25 @@ class Solution:
                     rec[i][j] = max(rec[i][j],total)
         return rec[0][n-1]
 ```
+
+# 491. Non-decreasing Subsequences
+
+[力扣题目链接](https://leetcode.cn/problems/non-decreasing-subsequences/description/)
+
+从左往右遍历数组，遍历到一个元素时，如果选择移动到这个位置，那么移动到这个位置所能获得的最大分数，只取决于之前的位置中：
+
+最后移动的元素为偶数时得分的最大值 和 最后移动的元素为奇数时得分的最大值
+
+我们可以用一个长度为 2 的数组 dp 来保存刚才提到的两个值。在求出当前位置可以获得的最大得分后，更新 dp。最后返回所有位置最大得分的最大值即可。
+
+
+```py3
+class Solution:
+    def maxScore(self, nums: List[int], x: int) -> int:
+        dp = [-inf, -inf]
+        dp[nums[0] % 2] = nums[0]
+        for i in range(1,len(nums)):
+            parity = nums[i] % 2
+            dp[parity] = max(dp[parity]+nums[i], dp[1-parity]-x+nums[i])
+        return max(dp[0],dp[1])
+```
