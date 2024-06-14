@@ -236,7 +236,7 @@ class Solution:
 
 树层去重可以用set判断，也可以排序后跳过数值重复的
 
-```
+```py3
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
         nums.sort()
