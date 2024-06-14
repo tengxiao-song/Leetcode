@@ -226,9 +226,37 @@ class Solution:
 
 [力扣题目链接](https://leetcode.cn/problems/permutations/)
 
+首先排列是有序的，也就是说 [1,2] 和 [2,1] 是两个集合，这和之前分析的子集以及组合所不同的地方。所以处理排列问题就不用使用startIndex了。
+
+其次一个排列里一个元素只能使用一次.
+
 # 47.全排列 II
 
 [力扣题目链接](https://leetcode.cn/problems/permutations-ii/)
+
+树层去重可以用set判断，也可以排序后跳过数值重复的
+
+```
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        res = []
+        def dfs(path, src):
+            if len(path) == len(nums):
+                res.append(path[:])
+            # used = set()
+            for i in range(len(src)):
+                if i > 0 and src[i] == src[i-1]:
+                    continue
+                # if src[i] in used:
+                    # continue
+                path.append(src[i])
+                # used.add(src[i])
+                dfs(path, src[:i]+src[i+1:])
+                path.pop()
+        dfs([],nums)
+        return res
+```
 
 # 332.重新安排行程(困难)
 
