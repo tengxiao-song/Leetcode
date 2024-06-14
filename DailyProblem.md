@@ -612,3 +612,24 @@ class Solution:
             dp[parity] = max(dp[parity]+nums[i], dp[1-parity]-x+nums[i])
         return max(dp[0],dp[1])
 ```
+
+# 2779. Maximum Beauty of an Array After Applying Operation
+
+[力扣题目链接](https://leetcode.cn/problems/maximum-beauty-of-an-array-after-applying-operation/description)
+
+排序+滑动窗口
+
+遍历所有的右结束端点，如果右元素-2k >= 左元素，缩小窗口。
+```py3
+class Solution:
+    def maximumBeauty(self, nums: List[int], k: int) -> int:
+        nums.sort()
+        left = 0
+        res = 0
+        for i in range(len(nums)):
+            right = i
+            while nums[right] - 2*k > nums[left]:
+                left += 1
+            res = max(res, right-left+1)
+        return res
+```
