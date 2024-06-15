@@ -262,31 +262,22 @@ class Solution:
 
 [力扣题目链接](https://leetcode.cn/problems/reconstruct-itinerary/)
 
-```py
+```py3
 class Solution:
-    def findItinerary(self, tickets):
-        targets = collections.defaultdict(list)
-        for ticket in tickets:
-            targets[ticket[0]].append(ticket[1])    #把出发地和可以去到的终点记录在map里
-        for val in targets.values():
-            val.sort()    # 对目的地列表进行排序, 保证lexical order
-        path = ['JFK']
-        ticketsLen = len(tickets) + 1
-        
-        def dfs(targets,path,ticketsLen):
-            if len(path) == ticketsLen:    
-                return True            #找到有效行程
-            airport = path[-1]    #更新出发点
-            destination = targets[airport]        #更新所有终点
-            for i, dest in enumerate(destination):    
-                targets[airport].pop(i)    # 标记已使用的机票，避免重复使用
-                path.append(dest)        # 添加目的地到路径
-                if dfs(targets,path,ticketsLen):
-                    return True        #找到有效行程，直接返回，因为sorted了
-                targets[airport].insert(i,dest)    #没找到就恢复机票
-                path.pop()        #移除目的地
-            return False        # 没有找到有效行程
-        dfs(targets,path,ticketsLen)
-        return path
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        res = []
+        tickets.sort(key=lambda x:x[1]) # 将所有行程根据destination排序，以便后续查找
+        graph = defaultdict(list)    # 将行程转化成graph
+        for u, v in tickets:
+            graph[u].append(v)
+
+        def dfs(new_graph, s):
+            while s in new_graph and len(new_graph[s]) > 0:    # 如该起点还有行程，根据排序取第一个元素(最小lexographic order), 进行dfs
+                v = new_graph[s][0]
+                new_graph[s].pop(0)
+                dfs(new_graph, v)
+            res.append(s)    # 加起点加入res，如处理完所有该起点的行程
+        dfs(graph, "JFK")
+        return res[::-1]    # 由于是处理完所有终点再加入起点，需要反转
 ```
 
