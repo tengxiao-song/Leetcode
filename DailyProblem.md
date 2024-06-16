@@ -633,3 +633,34 @@ class Solution:
             res = max(res, right-left+1)
         return res
 ```
+
+# 522. Longest Uncommon Subsequence II
+
+[力扣题目链接](https://leetcode.cn/problems/longest-uncommon-subsequence-ii/description)
+
+```py3
+class Solution:
+    def findLUSlength(self, strs: List[str]) -> int:
+        res = -1
+
+        def is_substr(str1, str2):        # 使用双指针，判断str1是不是str2的substring
+            i, j = 0, 0
+            while i < len(str1) and j < len(str2):
+                if str1[i] == str2[j]:
+                    i += 1
+                j += 1
+            return i == len(str1)
+
+        for i, str1 in enumerate(strs):        # 暴力n^2对比所有str，如果不是任何其他str的substring，记录
+            flag = True
+            for j, str2 in enumerate(strs):
+                if i != j and is_substr(str1,str2):
+                    flag = False
+                    break
+            if flag:
+                res = max(res, len(str1))
+
+        return res
+
+```
+
