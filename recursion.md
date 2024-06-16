@@ -281,3 +281,46 @@ class Solution:
         return res[::-1]    # 由于是处理完所有终点再加入起点，需要反转
 ```
 
+# 51. N-Queens
+
+[力扣题目链接](https://leetcode.cn/problems/n-queens/description/)
+
+```py3
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        res = []
+        board = [['.'] * n for _ in range(n)]        # 模拟棋盘放皇后
+
+        def dfs(row):
+            if row == n:
+                res.append([''.join(row) for row in board])        # 需要deepcopy，因为是2D array
+                return
+            for i in range(n):            # 对当前行遍历所有列，如果有一个位置行列对角都没Q，当前位置可行，进入下一行
+                if isValid(row, i):
+                    board[row][i] = 'Q'          
+                    dfs(row+1)
+                    board[row][i] = '.'
+
+        def isValid(row, col):
+            # 不用确认横向，因为dfs遍历横向是如果valid会进下一行，不可以会回溯
+            for i in range(0,row):        # 确认上方列
+                if board[i][col] == 'Q':
+                    return False
+            i = row-1
+            j = col-1
+            while i >=0 and j >= 0:        # 确认左上方对角线
+                if board[i][j] == 'Q':
+                    return False
+                i -= 1
+                j -= 1
+            i = row-1
+            j = col + 1
+            while i >= 0 and j < n:        # 确认右上方对角线
+                if board[i][j] == 'Q':
+                    return False
+                i -= 1
+                j += 1
+            return True
+        dfs(0)
+        return res
+```
