@@ -664,3 +664,21 @@ class Solution:
 
 ```
 
+# 2288. Apply Discount to Prices
+
+[力扣题目链接](https://leetcode.cn/problems/apply-discount-to-prices/description/)
+
+python 库api运用（split，isnumeric，format，join）
+
+```py3
+class Solution:
+    def discountPrices(self, sentence: str, discount: int) -> str:
+        words = sentence.split(' ')
+        for i in range(len(words)):
+            if len(words[i]) > 1 and words[i][0] == "$" and words[i][1:].isnumeric():
+                value = float(words[i][1:])
+                value = format(value - value * (discount / 100), '.2f')
+                words[i] = "$" + str(value)
+        return " ".join(words)
+
+```
