@@ -324,3 +324,50 @@ class Solution:
         dfs(0)
         return res
 ```
+
+# 37. Sudoku Solver
+
+思路：
+1. 二维递归
+2. 递归函数的返回值需要是bool类型，因为解数独找到一个符合的条件（就在树的叶子节点上）立刻就返回，相当于找从根节点到叶子节点一条唯一路径，所以需要使用bool返回值。
+
+```py3
+class Solution:
+    def solveSudoku(self, board: List[List[str]]) -> None:
+
+        def dfs():
+            for i in range(9):
+                for j in range(9):
+                    if board[i][j] == ".":                # 扫描全部棋盘，如果格子为空，尝试填数
+                        for num in range(1,10):
+                            num = str(num)
+                            if isValid(i, j, num):        # 如果可以填当前数字，进入递归
+                                board[i][j] = num
+                                result = dfs()            # 接受递归的返回值，如果为true，代表解出数独，直接返回
+                                if result:
+                                    return True
+                                board[i][j] = "."         # 如果为false，回溯
+                        return False                      # 如果尝试1-9都不能填入，返回false
+            return True                                   # 如果填完数独，返回true
+
+        def isValid(row, col, num):
+            for i in range(9):                            # 验证所有行没有重复
+                if i != row and board[i][col] == num:
+                    return False
+            for i in range(9):                            # 验证所有列
+                if i != col and board[row][i] == num:
+                    return False
+            box_row, box_col = row, col
+            while box_row % 3 != 0:
+                box_row -= 1
+            while box_col % 3 != 0:
+                box_col -= 1
+            for i in range(box_row, box_row+3):            # 验证3x3方块
+                for j in range(box_col, box_col+3):
+                    if (i != row and j != col) and board[i][j] == num:
+                        return False
+            return True
+
+        dfs()
+
+```
