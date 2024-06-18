@@ -682,3 +682,25 @@ class Solution:
         return " ".join(words)
 
 ```
+
+# 826. Most Profit Assigning Work
+
+[力扣题目链接](https://leetcode.cn/problems/most-profit-assigning-work/description/)
+
+```py3
+class Solution:
+    def maxProfitAssignment(self, difficulty: List[int], profit: List[int], worker: List[int]) -> int:
+        jobs = zip(difficulty,profit)    # zip会把两个集合中相同index的元素拼成tuple，[(2, 10), (4, 20), (6, 30), (8, 40), (10, 50)]
+        jobs = sorted(jobs)
+        worker.sort()           # 减少时间复杂度，下一个worker能力更强，直接从上一个worker结束的位置开始
+        res = 0
+        index = 0
+        money = 0
+        for i in range(len(worker)):
+            while index < len(jobs) and worker[i] >= jobs[index][0]:
+                money = max(money, jobs[index][1])
+                index += 1
+            res += money
+        return res
+
+```
