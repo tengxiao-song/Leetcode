@@ -34,7 +34,7 @@ class Solution:
 
 [力扣题目链接](https://leetcode.cn/problems/jump-game/)
 
-# 45.跳跃游戏 II(又错)
+# 45.跳跃游戏 II(优解)
 
 [力扣题目链接](https://leetcode.cn/problems/jump-game-ii/)
 
