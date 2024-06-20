@@ -50,7 +50,7 @@ class Solution(object):
         return res
 ```
 
-# 1005.K次取反后最大化的数组和(错)
+# 1005.K次取反后最大化的数组和(优解)
 
 [力扣题目链接](https://leetcode.cn/problems/maximize-sum-of-array-after-k-negations/)
 
@@ -74,7 +74,7 @@ class Solution(object):
 # 135. 分发糖果(空间优化)
 
 [力扣题目链接](https://leetcode.cn/problems/candy/)
-### Python
+
 ```python
 class Solution:
     def candy(self, ratings: List[int]) -> int:
@@ -107,7 +107,9 @@ class Solution:
 
 **如果两个维度一起考虑一定会顾此失彼**。
 
-按照身高排序之后，优先按身高高的people的k来插入，后序插入节点也不会影响前面已经插入的节点，最终按照k的规则完成了队列。
+尝试按照k排序，得到的结果还是很混乱的，考虑换一个纬度。
+
+那么按照身高h来排序呢，身高一定是从大到小排（身高相同的话则k小的站前面），让高个子在前面。此时我们可以确定一个维度了，就是身高，前面的节点一定都比本节点高！那么只需要按照k为下标重新插入队列就可以了，优先按身高高的people的k来插入，后序插入节点也不会影响前面已经插入的节点，最终按照k的规则完成了队列。
 
 ```py
 class Solution(object):
