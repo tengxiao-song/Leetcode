@@ -148,7 +148,24 @@ class Solution:
 
 [力扣题目链接](https://leetcode.cn/problems/partition-labels/)
 
-先用hashmap记录每个元素的起始和最终位置，再用类似merge interval合并。
+先用hashmap记录每个元素的起始和最终位置，再用遍历字符串，在到当前结束点前，不断包括元素和更新结束位置。
+
+```py3
+class Solution:
+    def partitionLabels(self, s: str) -> List[int]:
+        pos = defaultdict(list)
+        res = []
+        for i in range(len(s)):    # 主要记录每个元素的结束位置
+            pos[s[i]].append(i)
+        end = pos[s[0]][-1]
+        for i in range(len(s)):
+            end = max(end, pos[s[i]][-1])    # 不断更新当前需要到达的结束位置
+            if i == end:                    # 如果到达了，就把当前下标存入result
+               res.append(i  + 1)
+        for i in range(len(res)-1,0,-1):    # 用动归算出每个下标之间的个数
+            res[i] = res[i]-res[i-1]
+        return res
+```
 
 
 # 56. 合并区间 (时间优化)
