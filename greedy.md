@@ -212,15 +212,27 @@ class Solution:
 
 
 ```py
-class Solution(object):
-    def monotoneIncreasingDigits(self, n):
-        temp = list(str(n))
-        length = len(temp)
-        for i in range(length-1,0,-1):
-            if temp[i] < temp[i-1]:
-                temp[i:] = '9' * (len(temp) - i)
-                temp[i-1] = str(int(temp[i-1])-1)
-        return int("".join(temp))
+class Solution:
+    def monotoneIncreasingDigits(self, n: int) -> int:
+        if len(str(n)) == 1: return n        # 只有一位必是单调，直接返回
+        
+        digits = []        # 加入list方便操作
+        for i in str(n):
+            digits.append(i)
+
+        index = len(digits)
+        for i in range(len(digits)-1,0,-1):        # 从后往前遍历，如比前一位小，前一位减一，更新标记
+            if digits[i-1] > digits[i]:
+                digits[i-1] = str(int(digits[i-1])-1)
+                index = i
+
+        for i in range(index, len(digits)):        # 从标记往后全写成9，例如100，如果直接修改当前位的话结果是90，全写成9才是最大的99
+            digits[i] = "9"
+
+        res = "".join(digits)
+        return int(res)
+
+
 ```
 
 
