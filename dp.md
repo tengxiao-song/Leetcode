@@ -327,18 +327,26 @@ def test_1_wei_bag_problem():
 **此时问题就转化为，能否装满容量为x的背包**。
 
 ```py
-class Solution(object):
-    def canPartition(self, nums):
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
         if sum(nums) % 2 == 1:
             return False
-        mid = sum(nums) / 2
-        dp = [0] * (mid+1)
-        for i in nums:
-            for j in range(mid, i-1,-1):
-                dp[j] = max(dp[j], dp[j-i] + i)
-                if dp[j] == mid:
-                    return True
-        return False
+
+        n = len(nums)
+        total = sum(nums)
+        mid = total//2
+        dp = [[False]*(mid+1) for _ in range(n+1)]
+
+        for i in range(n+1):
+            dp[i][0] = True    # 第一列全初始化true，因为凑成0全不选即可
+
+        for i in range(1, n+1):
+            for j in range(1, mid+1):
+                if j < nums[i-1]:    # 目标比当前元素小，那不能选当前元素
+                    dp[i][j] = dp[i-1][j]
+                else:
+                    dp[i][j] = dp[i-1][j] or dp[i-1][j-nums[i-1]]   
+        return dp[n][mid]
 ```
 
 # 1049.最后一块石头的重量II
