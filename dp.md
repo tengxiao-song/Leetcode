@@ -358,15 +358,25 @@ class Solution:
 **此时问题就转化为，尽量装满容量为x的背包**。
 
 ```py
-class Solution(object):
-    def lastStoneWeightII(self, stones):
+class Solution:
+    def lastStoneWeightII(self, stones: List[int]) -> int:
         total = sum(stones)
-        target = total / 2        #尽量去凑一半的重量，这样对撞就是0
-        dp = [0] * (target + 1)    #index 0代表容量0
-        for i in stones:
-            for j in range(target, i-1, -1):    #终止条件为i-1，因为之后容量放不下物品i
-                dp[j] = max(dp[j], dp[j-i] + i)
-        return total - dp[target] - dp[target]    #用另一半石头减去这一半石头
+        half = total // 2    #尽量去凑一半的重量，这样对撞就是0
+        n = len(stones)
+        dp = [[False] * (half+1) for _ in range(n+1)]
+        for i in range(n+1):
+            dp[i][0] = True
+
+        for i in range(1,n+1):
+            for j in range(1, half+1):
+                if j < stones[i-1]:
+                    dp[i][j] = dp[i-1][j]
+                else:
+                    dp[i][j] = dp[i-1][j] or dp[i-1][j-stones[i-1]]
+
+        for i in range(half,-1,-1):
+            if dp[n][i] == True:
+                return total - i - i     #用另一半石头减去这一半石头
 ```
 
 # 494.目标和
@@ -390,19 +400,20 @@ target是固定的，sum是固定的，left就可以求出来。
 ```python
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        total_sum = sum(nums)  # 计算nums的总和
-        if abs(target) > total_sum:
-            return 0  # 此时没有方案
-        if (target + total_sum) % 2 == 1:
-            return 0  # 此时没有方案
-        target_sum = (target + total_sum) // 2  # 目标和
-        dp = [0] * (target_sum + 1)  # 创建动态规划数组，初始化为0
-        dp[0] = 1  # 当目标和为0时，只有一种方案，即什么都不选
-        for num in nums:
-            for j in range(target_sum, num - 1, -1):
-                dp[j] += dp[j - num]  # 状态转移方程，累加不同选择方式的数量
-        return dp[target_sum]  # 返回达到目标和的方案数
+        total = sum(nums)
+        if (total + target) % 2 != 0: return 0
+        left = (target + total) // 2     # 目标和
+        n = len(nums)
 
+        dp = [[0]*(left+1) for _ in range(n+1)]
+        dp[0][0] = 1    # 初始化状态,装满空背包有1种方法
+
+        for i in range(1,n+1):
+            for j in range(left+1):
+                dp[i][j] = dp[i - 1][j]    # 不选取当前元素
+                if j >= nums[i-1]:
+                    dp[i][j] += dp[i-1][j-nums[i-1]]    # 选取当前元素
+        return dp[n][left]
 ```
 
 # 474.一和零
