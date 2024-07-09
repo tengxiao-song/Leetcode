@@ -35,3 +35,52 @@ class Solution:
                 flowerbed[i] = 1
         return target <= 0
 ```
+
+## 238. Product of Array Except Self
+
+[力扣题目链接](https://leetcode.cn/problems/product-of-array-except-self/description/)
+
+利用索引左侧所有数字的乘积和右侧所有数字的乘积（即前缀与后缀）相乘得到答案。
+
+```py3
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        res1 = [1] * n
+        res2 = [1] * n
+        for i in range(1, n):
+            res1[i] = res1[i-1] * nums[i-1]
+        for i in range(n-2,-1,-1):
+            res2[i] = res2[i+1] * nums[i+1]
+        res = [1] * n
+        for i in range(n):
+            res[i] = res1[i] * res2[i]
+        return res
+```
+
+## 334. Increasing Triplet Subsequence
+
+[力扣题目链接](https://leetcode.cn/problems/increasing-triplet-subsequence/description/)
+
+为了找到递增的三元子序列，first 和 second 应该尽可能地小，此时找到递增的三元子序列的可能性更大.
+
+如果遍历过程中遇到的所有元素都大于 first，则当遇到 num > second 时，first 一定出现在 second 的前面，second 一定出现在 num 的前面，(first,second,num) 即为递增的三元子序列。
+
+如果遍历过程中遇到小于 first 的元素，则会用该元素更新 first，虽然更新后的 first 出现在 second 的后面，但是在 second 的前面一定存在一个元素 first’ 小于 second，因此当遇到 num>second 时，(first’,second,num) 即为递增的三元子序列。
+
+
+```py3
+class Solution:
+    def increasingTriplet(self, nums: List[int]) -> bool:
+        n = len(nums)
+        first = nums[0]
+        second = float("inf")
+        for num in nums:
+            if num > second:
+                return True
+            if num > first:
+                second = num
+            else:
+                first = num
+        return False
+```
