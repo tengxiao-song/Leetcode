@@ -84,3 +84,28 @@ class Solution:
                 first = num
         return False
 ```
+
+## 394. Decode String
+
+[力扣题目链接](https://leetcode.cn/problems/decode-string/description/)
+
+```py3
+class Solution:
+    def decodeString(self, s: str) -> str:
+        stack = []
+        for i in s:
+            if i != "]":        # 之前写的isalnum判断，导致遇到左括号也进行处理的bug
+                stack.append(i)
+            else:
+                word = ""
+                while stack[-1].isalpha():
+                    word = stack.pop() + word
+                stack.pop()    # 删除左括号
+                num = 0 
+                t = 1
+                while stack and stack[-1].isnumeric():
+                    num += int(stack.pop()) * t
+                    t *= 10
+                stack.append(word * num)
+        return "".join(stack)
+```
