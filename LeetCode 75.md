@@ -109,3 +109,34 @@ class Solution:
                 stack.append(word * num)
         return "".join(stack)
 ```
+
+## 649. Dota2 Senate
+
+[力扣题目链接](https://leetcode.cn/problems/dota2-senate/description/)
+
+```py3
+class Solution:
+    def predictPartyVictory(self, senate: str) -> str:
+        senate = list(senate)
+        n = len(senate)
+        R, D = True, True
+        flag = 0 # 大于0表示可以跳过r，小于0表示可以跳过d
+        while R and D:
+            R = False
+            D = False
+            for i in range(n):
+                if senate[i] == "R":
+                    if flag > 0:
+                        senate[i] = '0'
+                    else:
+                        R = True
+                    flag -= 1
+                elif senate[i] == "D":
+                    if flag < 0:
+                        senate[i] = '0'
+                    else:
+                        D = True
+                    flag += 1
+        return "Radiant" if R else "Dire"
+```
+
