@@ -140,3 +140,25 @@ class Solution:
         return "Radiant" if R else "Dire"
 ```
 
+# 236. 二叉树的最近公共祖先 (又错)
+
+[力扣题目链接](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/)
+
+后续遍历
+
+```py
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        # 1. 先看根节点是不是祖先
+        if not root or root == p or root == q:
+            return root
+        # 如果根节点是祖先，有没有更近的祖先呢
+        left = self.lowestCommonAncestor(root.left,p,q)
+        right = self.lowestCommonAncestor(root.right,p,q)
+        # 如果有的话显然只会在一侧 判断一下
+        if not left: return right    #case:都在右
+        if not right: return left   #case:都在左
+        # 如果没有更近的，默认还是返回root
+        return root
+```
+
