@@ -162,3 +162,69 @@ class Solution(object):
         return root
 ```
 
+# 399. Evaluate Division (hard)
+
+[力扣题目链接](https://leetcode.cn/problems/evaluate-division/description/)
+
+```py3
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        # 生成存储变量所构成的图结构
+        graph = {}  
+        for (s, e), v in zip(equations, values):
+            if s not in graph:
+                graph[s] = {}   # 存储邻节点的哈希表
+            graph[s][e] = v     # 生成一条s指向e，权重为v的路径，表示 s / e = v
+            if e not in graph:
+                graph[e] = {}
+            graph[e][s] = 1 / v # 生成一条反向路径，权重为1 / v，表示 e / s = 1 /v
+            graph[s][s] = 1.0   # 生成一个指向自己、权重为1的路径，表示自己除自己等于1
+            graph[e][e] = 1.0
+        
+        n = len(queries)    
+        ans = [-1.0] * n    # 答案列表，初始都为-1表示未定义
+
+        # 对于每个query，寻找从起点qx到终点qy的最短路径，并计算权重积
+        for i, (qx, qy) in enumerate(queries):
+            if qx not in graph or qy not in graph: continue  # 未出现的变量，跳过处理
+            queue = [[qx, 1.0]]     # 初始将起点节点入队
+            visited = set([qx])     # 存储已处理的节点；将qx放入列表表示存储整个字符串，否则会将字符串看成一个序列存储每个字母
+            while queue:
+                node, mul = queue.pop(0)    # 获取当前处理的节点node以及到该节点所得到的权重积mul
+                for neighbor, weight in graph[node].items():
+                    # 枚举该节点的所有邻节点
+                    if neighbor == qy:
+                        ans[i] = mul * weight   # 找到终点，更新权重积后存储到答案并退出查找
+                        break
+                    if neighbor not in visited: # 找到一个未处理的邻节点加入队列
+                        visited.add(neighbor)
+                        queue.append([neighbor, mul * weight])  # 将未处理的邻节点及到达该节点时的权重积加入队列
+        return ans                
+```
+
+# 1926. Nearest Exit from Entrance in Maze
+
+[力扣题目链接](https://leetcode.cn/problems/nearest-exit-from-entrance-in-maze/description/)
+
+```py3
+class Solution:
+    def nearestExit(self, maze: List[List[str]], entrance: List[int]) -> int:
+        q = deque([[entrance[0],entrance[1],0]])
+        location = [[1,0],[-1,0],[0,-1],[0,1]]
+        visited = set()
+        visited.add((entrance[0],entrance[1]))
+        while q:
+            item = q.popleft()
+            x,y,step = item[0],item[1],item[2]
+            maze[x][y] = "+"
+            if (x == 0 or x == len(maze)-1 or y == 0 or y == len(maze[0])-1) and not (x==entrance[0] and y == entrance[1]):
+                return step
+            for i in range(4):
+                newX = x + location[i][0]
+                newY = y + location[i][1]
+                if newX >= 0 and newX <= len(maze)-1 and newY >= 0 and newY <= len(maze[0])-1 and maze[newX][newY] == "." and (newX,newY) not in visited:
+                    q.append([newX,newY,step+1])
+                    visited.add((newX,newY))
+        return -1
+```
+
