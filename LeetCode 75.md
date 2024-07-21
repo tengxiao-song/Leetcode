@@ -228,3 +228,27 @@ class Solution:
         return -1
 ```
 
+# 2542. Maximum Subsequence Score
+
+[力扣题目链接](https://leetcode.cn/problems/maximum-subsequence-score/description/)
+
+子序列无需连续
+
+```py3
+class Solution:
+    def maxScore(self, nums1: List[int], nums2: List[int], k: int) -> int:
+        combine = sorted(zip(nums1,nums2), key=lambda x:-x[1]) # 合并数组一起排序，按nums2从大到小
+        h = combine[:k]    # 截取前k个
+        heap = [i for i, _ in h] #固定为 k 的最小堆来做，如果当前元素大于堆顶，就替换堆顶，这样可以让堆中元素之和变大
+        heapq.heapify(heap)
+        total = sum(heap)
+        least = h[k-1][1]    # 当前范围内最小的元素
+        res = total * least
+        for x, y in combine[k:]:
+            if x > heap[0]:    # 如果当前元素大于heap最小元素，代表可以尝试选择该下标，从新计算最大sum和least
+                total = total + x - heap[0]
+                least = min(least,y)
+                res = max(res, total * least)
+                heapq.heapreplace(heap,x)
+        return res
+```
