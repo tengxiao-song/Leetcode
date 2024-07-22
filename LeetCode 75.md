@@ -252,3 +252,37 @@ class Solution:
                 heapq.heapreplace(heap,x)
         return res
 ```
+
+# 2462. Total Cost to Hire K Workers
+
+[力扣题目链接](https://leetcode.cn/problems/total-cost-to-hire-k-workers/description/)
+
+```py3
+class Solution(object):
+    def totalCost(self, costs, k, candidates):
+        res = 0
+        q = []
+        n = len(costs)
+        left = candidates - 1
+        right = n - candidates
+        if left + 1 < right:
+            for i in range(left+1):        # 加入值和index，用来判断是哪边加入的
+                heappush(q, (costs[i],i))
+            for i in range(right, n):
+                heappush(q, (costs[i],i))
+        else:
+            for i in range(n):
+                heappush(q, (costs[i],i))
+        for i in range(k):
+            cost, index = heappop(q)
+            res += cost
+            if left + 1 < right:    # left + 1 < right 避免出现重复元素
+                if index < left + 1:
+                    left += 1
+                    heappush(q, (costs[left],left))
+                else:
+                    right -= 1
+                    heappush(q, (costs[right],right))
+        return res
+```
+
