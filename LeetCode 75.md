@@ -286,3 +286,29 @@ class Solution(object):
         return res
 ```
 
+# 875. Koko Eating Bananas
+
+[力扣题目链接](https://leetcode.cn/problems/koko-eating-bananas/description/)
+
+这里不二分index，而是二分时间。
+
+while (left <= right) 要使用 <= ，因为left == right是有意义的，所以使用 <=
+if (nums[middle] > target) right 要赋值为 middle - 1，因为当前这个nums[middle]一定不是target，那么接下来要查找的左区间结束下标位置就是 middle - 1
+
+```py3
+class Solution:
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        n = len(piles)
+        low = 1
+        high = max(piles)
+        while low <= high:
+            speed = (low + high) // 2
+            hours = 0
+            for i in range(n):
+                hours += math.ceil(piles[i] / speed)
+            if hours <= h:
+                high = speed - 1
+            else:
+                low = speed + 1
+        return low
+```
