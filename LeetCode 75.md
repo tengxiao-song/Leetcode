@@ -312,3 +312,20 @@ class Solution:
                 low = speed + 1
         return low
 ```
+
+# 136. Single Number
+
+[力扣题目链接](https://leetcode.cn/problems/single-number/description/)
+
+异或XOR：两个相同的数异或结果为0（0^0=0, 1^1=0),两个不同数异或为它本身(1^0=1,0^1=1)
+
+异或运算满足交换律和结合律
+
+```py3
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        res = 0
+        for num in nums:
+            res = res ^ num
+        return res
+```
