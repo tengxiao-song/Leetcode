@@ -329,3 +329,37 @@ class Solution:
             res = res ^ num
         return res
 ```
+
+# 1268. Search Suggestions System
+
+[力扣题目链接](https://leetcode.cn/problems/search-suggestions-system/description/)
+
+```py3
+class Trie:
+    def __init__(self):
+        self.child = dict()    # 下一层入口
+        self.words = []    # 每一层最多保留3个词
+class Solution:
+    def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
+        root = Trie()
+        for product in products:
+            temp = root
+            for ch in product:
+                if ch not in temp.child:
+                    temp.child[ch] = Trie()
+                temp = temp.child[ch]
+                temp.words.append(product)
+                temp.words.sort()
+                if len(temp.words) > 3:
+                    temp.words.pop()
+        res = []
+        flag = False # 表示没有匹配的前缀，可以直接返回空数组
+        for i in searchWord:
+            if flag or i not in root.child:
+                flag = True
+                res.append([])
+            else:
+                root = root.child[i]
+                res.append(root.words)
+        return res
+```
