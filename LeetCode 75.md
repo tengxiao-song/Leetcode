@@ -1,5 +1,3 @@
-# Array/String
-
 ## 1071. Greatest Common Divisor of Strings
 
 [力扣题目链接](https://leetcode.cn/problems/greatest-common-divisor-of-strings/description/)
@@ -361,5 +359,26 @@ class Solution:
             else:
                 root = root.child[i]
                 res.append(root.words)
+        return res
+```
+
+# 128. Longest Consecutive Sequence
+
+用hashset达成O(n)复杂度，**简单来说就是每个数都判断一次这个数是不是连续序列的开头那个数**，如果是从下往上进行计数。
+
+```py3
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        res = 0
+        collect = set(nums)
+        for i in collect:
+            if i - 1 in collect:
+                continue
+            else:
+                temp = 1
+                while i + 1 in collect:
+                    temp += 1
+                    i += 1
+                res = max(res,temp)
         return res
 ```
