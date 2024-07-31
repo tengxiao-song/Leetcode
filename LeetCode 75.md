@@ -382,3 +382,24 @@ class Solution:
                 res = max(res,temp)
         return res
 ```
+
+# 560. Subarray Sum Equals K
+
+
+简单来说，就是随着i递增，pre作为当前到i的数组和，查看map里面有没有值为pre-k的，有的话刚好pre -（pre-k）就等于k，满足需求，而map里的value值代表这个点的个数有几个，即，不同的数组段（子序列）有几个，然后加入count，最后把到下标为i的数组和存进map里，然后进入下一个i。
+
+
+```py3
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        res = 0
+        count = defaultdict(int)
+        count[0] = 1 # basecase
+        pre = 0
+        for i in range(len(nums)):
+            pre += nums[i]
+            if pre - k in count:
+                res += count[pre-k]
+            count[pre] += 1
+        return res
+```
