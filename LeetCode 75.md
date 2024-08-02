@@ -403,3 +403,27 @@ class Solution:
             count[pre] += 1
         return res
 ```
+
+# 76. Minimum Window Substring
+
+```py3
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        res_left, res_right = -1, len(s)
+        left = 0
+        count_s = defaultdict(int)
+        count_t = Counter(t)
+        less = len(count_t)      # 记录有less个键值对, 如less为0代表当前count_s覆盖了count_t
+        for right, val in enumerate(s):
+            count_s[val] += 1        # 移动右节点，把每个元素加入s
+            if count_s[val] == count_t[val]:    # 标记一个键值对满足
+                less -= 1
+            while less == 0:        # count_s >= count_t(如都满足，移动左节点)
+                if right - left < res_right - res_left:    # 尝试更新更小的区间
+                    res_left, res_right = left, right
+                if count_s[s[left]] == count_t[s[left]]:    # 如左节点是t需要的字符，增加less
+                    less += 1
+                count_s[s[left]] -= 1        # 缩小左节点
+                left += 1
+        return "" if res_left == -1 else s[res_left:res_right+1]
+```
