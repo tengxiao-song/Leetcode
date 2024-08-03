@@ -427,3 +427,24 @@ class Solution:
                 left += 1
         return "" if res_left == -1 else s[res_left:res_right+1]
 ```
+
+# 189. Rotate Array
+
+```py3
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        k = k % n 
+        def reverse(left,right):
+            while left < right:
+                nums[left],nums[right] = nums[right],nums[left]    # 手动翻转，使用切片会使用内存
+                left += 1
+                right -= 1
+        reverse(0,n-1)    # 翻转整个数组
+        reverse(0,k-1)    # 翻转前k个
+        reverse(k,n-1)    # 翻转后n-k个
+
+```
