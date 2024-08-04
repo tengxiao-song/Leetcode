@@ -446,5 +446,21 @@ class Solution:
         reverse(0,n-1)    # 翻转整个数组
         reverse(0,k-1)    # 翻转前k个
         reverse(k,n-1)    # 翻转后n-k个
+```
 
+# 41. First Missing Positive
+
+把合法范围内的数字换到对应的下标上，比如数字1要在下标0上，数字2要在下标1上。这样遍历所有下标就知道缺少哪个数了
+
+```py3
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        n = len(nums)
+        for i in range(n):
+            while 1 <= nums[i] <= n and nums[nums[i]-1] != nums[i]:    # 新的nums[i]可能还不在正确的位子上，所以是while
+                nums[nums[i]-1],nums[i] = nums[i],nums[nums[i]-1]
+        for i in range(n):
+            if nums[i] != i+1:
+                return i+1
+        return n + 1
 ```
