@@ -464,3 +464,22 @@ class Solution:
                 return i+1
         return n + 1
 ```
+
+# 240. Search a 2D Matrix II
+
+从右上角看是一棵二叉搜索树
+
+```py3
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        n, m = len(matrix), len(matrix[0])
+        row, col = 0, len(matrix[0])-1
+        while row >= 0 and row < n and col >= 0 and col <= m:
+            if target < matrix[row][col]:
+                col -= 1
+            elif target > matrix[row][col]:
+                row += 1
+            else:
+                return True
+        return False
+```
