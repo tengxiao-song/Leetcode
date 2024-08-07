@@ -483,3 +483,45 @@ class Solution:
                 return True
         return False
 ```
+
+# 148. Sort List
+
+merge sort链表
+
+```py3
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head or not head.next:
+            return head
+        slow, fast = head, head.next.next
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        newhead = slow.next
+        slow.next = None        # 递归拆分然后合并
+        left = self.sortList(head)
+        right = self.sortList(newhead)
+        return self.merge(left,right)
+
+    def merge(self, l, r):
+        dummy = ListNode(-1)
+        curr = dummy
+        while l and r:
+            if l.val < r.val:
+                curr.next = l
+                l = l.next
+            else:
+                curr.next = r
+                r = r.next
+            curr = curr.next
+        if l:
+            curr.next = l
+        if r:
+            curr.next = r
+        return dummy.next
+```
