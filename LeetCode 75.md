@@ -486,7 +486,7 @@ class Solution:
 
 # 148. Sort List
 
-merge sort链表
+merge sort链表，把多个节点，拆成单个然后合并起来
 
 ```py3
 # Definition for singly-linked list.
@@ -524,4 +524,102 @@ class Solution:
         if r:
             curr.next = r
         return dummy.next
+```
+
+# 23. Merge k Sorted Lists
+
+把多个链表拆成单个然后合并起来
+
+```py3
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        n = len(lists)
+        if n == 0:
+            return None
+        if n == 1:
+            return lists[0]
+        l = self.mergeKLists(lists[:n // 2])
+        r = self.mergeKLists(lists[n // 2:])
+        return self.mergeTwo(l,r)
+        
+    def mergeTwo(self, l, r):
+        dummy = ListNode(-1)
+        curr = dummy
+        while l and r:
+            if l.val < r.val:
+                curr.next = l
+                l = l.next
+            else:
+                curr.next = r
+                r = r.next
+            curr = curr.next
+        if l:
+            curr.next = l
+        if r: 
+            curr.next = r
+        return dummy.next
+```
+
+# 146. LRU Cache
+
+```py3
+class ListNode:
+    def __init__(self, key, val):
+        self.key = key
+        self.val = val
+        self.prev = None
+        self.next = None
+    
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.size = 0
+        self.dict = {}
+        self.head = ListNode(-1,-1)
+        self.tail = ListNode(-1,-1)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def get(self, key: int) -> int:
+        if key in self.dict:
+            node = self.dict[key]
+            node.prev.next = node.next    # 调节当前位置的前后
+            node.next.prev = node.prev
+            node.next = self.head.next    # 调节目标节点的前后
+            node.prev = self.head
+            self.head.next.prev = node    # 调节头节点前后
+            self.head.next = node
+            return node.val
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.dict:
+            node = self.dict[key]
+            node.val = value
+            node.prev.next = node.next
+            node.next.prev = node.prev
+            node.next = self.head.next
+            node.prev = self.head
+            self.head.next.prev = node
+            self.head.next = node
+        else:
+            if self.size == self.capacity:
+                delnode = self.tail.prev
+                delnode.prev.next = delnode.next
+                self.tail.prev = delnode.prev
+                del self.dict[delnode.key]
+                self.size -= 1
+            new_node = ListNode(key,value)
+            self.dict[key] = new_node
+            new_node.next = self.head.next
+            new_node.prev = self.head
+            self.head.next.prev = new_node
+            self.head.next = new_node
+            self.size += 1
 ```
